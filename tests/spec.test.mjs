@@ -24,10 +24,9 @@ test("본문 코드 블록은 도면 스타일 대상", async () => {
 
 test("상세의 파일 번호는 목록과 같다", async () => {
   const home = await readDist("index.html");
-  const no = home.match(/FILE (\d\d)<\/span>[\s\S]*?href="\/projects\/ca2sa\/"/);
   const cards = home.split('<article class="card"').slice(1);
   const card = cards.find((c) => c.includes('href="/projects/ca2sa/"'));
   const fileNo = card.match(/FILE (\d\d)/)[1];
   const spec = await readDist("projects/ca2sa/index.html");
-  assert.match(spec, new RegExp(`FILE ${fileNo}`));
+  assert.match(spec, new RegExp(`Technical Specification · FILE ${fileNo}`));
 });
