@@ -13,7 +13,8 @@ export const profile = {
   photo: null as string | null,
   github: "https://github.com/Gsuyoung",
   email: "suyoung606123@gmail.com",
-  // 이력서 PDF를 public/resume.pdf 에 넣으면 버튼이 동작합니다.
+  // 이력서 버튼. public/resume.pdf 파일이 있거나, 노션·구글 드라이브 공유 링크(https://...)를 넣으면 보입니다.
+  // 파일이 없으면 버튼은 자동으로 숨겨집니다. 레포가 공개라 PDF에는 개인정보를 빼고 넣으세요.
   resume: "/resume.pdf",
 };
 

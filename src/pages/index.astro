@@ -1,4 +1,6 @@
 ---
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 import { getCollection } from "astro:content";
 import Layout from "../layouts/Layout.astro";
 import SkillTags from "../components/SkillTags.astro";
@@ -9,6 +11,11 @@ import { inline } from "../lib/text";
 const projects = (await getCollection("projects", ({ data }) => !data.draft)).sort(
   (a, b) => a.data.order - b.data.order,
 );
+
+// 외부 링크면 그대로 쓰고, public/ 안의 파일이면 실제로 있을 때만 버튼을 보여줍니다.
+const hasResume =
+  !!profile.resume &&
+  (/^https?:\/\//.test(profile.resume) || existsSync(join(process.cwd(), "public", profile.resume)));
 ---
 
 <Layout>
@@ -35,18 +42,28 @@ const projects = (await getCollection("projects", ({ data }) => !data.draft)).so
         </div>
 
         <div class="flex flex-wrap gap-2 text-[13px]">
-          <a
-            href={profile.resume}
-            target="_blank"
-            class="rounded-md bg-sky px-3 py-1.5 font-semibold text-[#102033] hover:brightness-105"
-          >
-            이력서 PDF
-          </a>
+          {
+            hasResume && (
+              <a
+                href={profile.resume}
+                target="_blank"
+                rel="noopener"
+                class="rounded-md bg-sky px-3 py-1.5 font-semibold text-[#102033] hover:brightness-105"
+              >
+                이력서 PDF
+              </a>
+            )
+          }
           <a
             href={profile.github}
             target="_blank"
             rel="noopener"
-            class="rounded-md border border-navy-600 px-3 py-1.5 hover:border-navy-300"
+            class:list={[
+              "rounded-md px-3 py-1.5",
+              hasResume
+                ? "border border-navy-600 hover:border-navy-300"
+                : "bg-sky font-semibold text-[#102033] hover:brightness-105",
+            ]}
           >
             GitHub
           </a>
