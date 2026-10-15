@@ -27,3 +27,12 @@ test("링크 미리보기 이미지 파일이 있다", async () => {
   const s = await stat("dist/og.png");
   assert.ok(s.size > 10_000);
 });
+
+test("OG 이미지와 canonical이 정식 주소 기준 절대 주소", async () => {
+  const html = await readDist("index.html");
+  assert.match(html, /property="og:image" content="https:\/\/portfolio-wine-mu-78\.vercel\.app\/og\.png"/);
+  assert.match(html, /property="og:url" content="https:\/\/portfolio-wine-mu-78\.vercel\.app\/"/);
+  assert.match(html, /rel="canonical" href="https:\/\/portfolio-wine-mu-78\.vercel\.app\/"/);
+  const spec = await readDist("projects/ca2sa/index.html");
+  assert.match(spec, /rel="canonical" href="https:\/\/portfolio-wine-mu-78\.vercel\.app\/projects\/ca2sa\/"/);
+});
