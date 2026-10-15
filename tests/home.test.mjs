@@ -46,11 +46,12 @@ test("예전 네이비 사이드바는 사라졌다", async () => {
   assert.doesNotMatch(html, /navy-/);
 });
 
-test("첫 화면: GSY 태그 옆 비즈 캐릭터 스티커(장식, 최적화 이미지)", async () => {
+test("첫 화면: 네임택 옆 비즈 캐릭터는 도트(SVG 점)로 종이 위에 찍힌다", async () => {
   const html = await readDist("index.html");
-  const charm = html.match(/<div class="charm"[\s\S]*?<\/div>/);
-  assert.ok(charm, "charm 카드가 있어야 함");
-  assert.match(charm[0], /<img[^>]*src="\/_astro\/bead-charm\.[^"]+\.webp"/);
-  assert.match(charm[0], /\salt(="")?[\s>]/);
-  assert.match(charm[0], /aria-hidden="true"/);
+  const start = html.indexOf('<div class="charm"');
+  assert.ok(start >= 0, "charm 카드가 있어야 함");
+  const charm = html.slice(start, html.indexOf("</svg>", start));
+  assert.match(charm, /aria-hidden="true"/);
+  assert.ok((charm.match(/<circle/g) ?? []).length > 400, "구슬 점이 SVG 원으로 찍혀야 함");
+  assert.doesNotMatch(charm, /<img/);
 });

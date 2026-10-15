@@ -1,44 +1,65 @@
 ---
-import { Image } from "astro:assets";
-import beadCharm from "../../assets/bead-charm.png";
+// 네임택 오른쪽 아래에 붙인 비즈 캐릭터 스티커.
+// 원본 PNG(src/assets/bead-charm.png)를 scripts/bead-to-svg.mjs 로 구슬 하나당 점 하나씩 다시 찍은 SVG 입니다.
+import Bead from "../../assets/bead-charm.svg";
 ---
 
 <div class="charm" aria-hidden="true">
-  <div class="crop"><Image src={beadCharm} alt="" width={240} height={240} /></div>
+  <span class="tape"></span>
+  <div class="paper">
+    <Bead class="bead" />
+  </div>
 </div>
 
 <style>
-  /* GSY 태그 옆에 붙인 작은 비즈 캐릭터 스티커 카드 */
   .charm {
     position: absolute;
-    right: 7%;
-    top: 575px;
-    z-index: 4;
-    width: 104px;
-    padding: 6px;
-    background: #f7f5f0;
-    border: 1px solid #ddd8cd;
-    box-shadow: 0 16px 30px -14px rgb(0 0 0 / 0.8);
-    transform: rotate(9deg);
+    right: 0.5%;
+    top: 548px;
+    z-index: 3;
+    width: 112px;
+    transform: rotate(7deg);
   }
-  /* 원본 여백이 넓어서 캐릭터 부분만 확대해 보여줍니다. */
-  .crop {
-    overflow: hidden;
-    aspect-ratio: 1;
+  /* 다른 서류와 같은 종이 바탕 + 섬유 질감 + 그림자 */
+  .paper {
+    position: relative;
+    padding: 8px 10px 12px;
+    background-color: var(--color-paper);
+    background-image:
+      radial-gradient(rgb(0 0 0 / 0.035) 1px, transparent 1px),
+      linear-gradient(160deg, rgb(255 255 255 / 0.5), transparent 40%, rgb(0 0 0 / 0.04));
+    background-size: 3px 3px, 100% 100%;
+    box-shadow:
+      0 1px 0 rgb(255 255 255 / 0.5) inset,
+      0 22px 36px -18px rgb(0 0 0 / 0.85),
+      0 6px 12px -8px rgb(0 0 0 / 0.6);
   }
-  img {
+  /* 종이에 찍힌 잉크처럼 보이도록 곱하기 합성 */
+  .paper :global(.bead) {
     display: block;
     width: 100%;
     height: auto;
-    transform: scale(1.2);
-    transform-origin: 50% 50%;
+    mix-blend-mode: multiply;
+  }
+  /* 반투명 마스킹 테이프 */
+  .tape {
+    position: absolute;
+    left: 50%;
+    top: -9px;
+    z-index: 1;
+    width: 52px;
+    height: 16px;
+    background: rgb(233 226 205 / 0.75);
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.15);
+    transform: translateX(-50%) rotate(-4deg);
   }
   @media (max-width: 900px) {
     .charm {
-      right: 14px;
+      left: 214px;
+      right: auto;
       top: auto;
-      bottom: 14px;
-      width: 84px;
+      bottom: 8px;
+      width: 92px;
     }
   }
 </style>
