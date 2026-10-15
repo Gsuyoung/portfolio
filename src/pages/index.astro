@@ -1,16 +1,157 @@
 ---
+import { getCollection } from "astro:content";
+import Layout from "../layouts/Layout.astro";
+import SkillTags from "../components/SkillTags.astro";
+import SectionTitle from "../components/SectionTitle.astro";
+import { profile, experience } from "../data/profile";
+import { inline } from "../lib/text";
+
+const projects = (await getCollection("projects", ({ data }) => !data.draft)).sort(
+  (a, b) => a.data.order - b.data.order,
+);
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout>
+  <div class="lg:grid lg:min-h-screen lg:grid-cols-[300px_1fr]">
+    <!-- 사이드바: 데스크톱에서는 화면 왼쪽에 고정, 모바일에서는 상단 프로필 -->
+    <aside class="bg-navy-800 text-[#e6ebf1] lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto">
+      <div class="grid content-start gap-7 px-5 py-8 sm:px-8 lg:py-12">
+        <div class="grid gap-1">
+          {
+            profile.photo ? (
+              <img src={profile.photo} alt={profile.name} class="mb-3 size-16 rounded-full object-cover" />
+            ) : (
+              <div
+                class="mb-3 grid size-16 place-items-center rounded-full bg-navy-600 text-2xl font-semibold text-[#cfe0f5]"
+                aria-hidden="true"
+              >
+                {profile.initial}
+              </div>
+            )
+          }
+          <h1 class="text-2xl font-bold">{profile.name}</h1>
+          <p class="font-mono text-sm text-sky-soft">{profile.role}</p>
+          <p class="mt-2 text-sm text-navy-200">{profile.tagline}</p>
+        </div>
+
+        <div class="flex flex-wrap gap-2 text-[13px]">
+          <a
+            href={profile.resume}
+            target="_blank"
+            class="rounded-md bg-sky px-3 py-1.5 font-semibold text-[#102033] hover:brightness-105"
+          >
+            이력서 PDF
+          </a>
+          <a
+            href={profile.github}
+            target="_blank"
+            rel="noopener"
+            class="rounded-md border border-navy-600 px-3 py-1.5 hover:border-navy-300"
+          >
+            GitHub
+          </a>
+        </div>
+
+        <div class="hidden lg:block">
+          <h2 class="mb-3 text-[11px] tracking-[0.12em] text-navy-300 uppercase">Skills</h2>
+          <SkillTags tone="dark" />
+        </div>
+
+        <div>
+          <h2 class="mb-2 text-[11px] tracking-[0.12em] text-navy-300 uppercase">Contact</h2>
+          <dl class="grid grid-cols-[3.5rem_1fr] gap-y-1.5 font-mono text-[12.5px] text-[#c7d4e2]">
+            <dt class="text-navy-300">email</dt>
+            <dd class="break-all">
+              <a href={`mailto:${profile.email}`} class="hover:underline">{profile.email}</a>
+            </dd>
+            <dt class="text-navy-300">github</dt>
+            <dd class="break-all">
+              <a href={profile.github} target="_blank" rel="noopener" class="hover:underline">
+                {profile.github.replace("https://", "")}
+              </a>
+            </dd>
+          </dl>
+        </div>
+      </div>
+    </aside>
+
+    <main class="mx-auto grid w-full max-w-3xl content-start gap-12 px-5 py-10 sm:px-10 lg:px-14 lg:py-14">
+      <section>
+        <SectionTitle id="about">About</SectionTitle>
+        <div class="grid max-w-[60ch] gap-2 text-base text-body">
+          {profile.about.map((p) => <p>{p}</p>)}
+        </div>
+      </section>
+
+      <section class="lg:hidden">
+        <SectionTitle id="skills">Skills</SectionTitle>
+        <SkillTags tone="light" />
+      </section>
+
+      <section>
+        <SectionTitle id="experience">Experience</SectionTitle>
+        <ol class="grid gap-6">
+          {
+            experience.map((e) => (
+              <li class="grid gap-x-6 gap-y-1 sm:grid-cols-[8.5rem_1fr]">
+                <span class="pt-0.5 font-mono text-[12.5px] text-muted">{e.period}</span>
+                <div>
+                  <h3 class="font-semibold">{e.title}</h3>
+                  <ul class="mt-1.5 list-disc pl-5 text-[14.5px] text-body">
+                    {e.items.map((i) => (
+                      <li>{i}</li>
+                    ))}
+                  </ul>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+      </section>
+
+      <section>
+        <SectionTitle id="projects">Projects</SectionTitle>
+        {
+          projects.length === 0 && (
+            <p class="rounded-xl border border-dashed border-line px-5 py-8 text-center text-[14.5px] text-muted">
+              프로젝트 소개를 준비하고 있습니다.
+            </p>
+          )
+        }
+        <ul class="grid gap-3.5">
+          {
+            projects.map((p) => (
+              <li>
+                <a
+                  href={`/projects/${p.id}/`}
+                  class="group grid gap-2 rounded-xl border border-line px-5 py-5 transition-colors hover:border-[#b9cde4] hover:bg-[#fafcfe] sm:px-6"
+                >
+                  <div class="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
+                    <h3 class="text-[17px] font-semibold">{p.data.title}</h3>
+                    <span class="font-mono text-[12.5px] text-muted">
+                      {p.data.team ? `${p.data.period} · ${p.data.team}` : p.data.period}
+                    </span>
+                  </div>
+                  <p class="text-[14.5px] text-body">{p.data.summary}</p>
+                  {p.data.highlight && <p class="text-sm" set:html={inline(p.data.highlight)} />}
+                  <div class="mt-1 flex flex-wrap items-center justify-between gap-2">
+                    <ul class="flex flex-wrap gap-1.5">
+                      {p.data.stack.map((s) => (
+                        <li class="rounded bg-accent-soft px-2 py-0.5 font-mono text-xs text-[#1f5fae]">{s}</li>
+                      ))}
+                    </ul>
+                    <span class="text-[13.5px] font-semibold text-accent group-hover:underline">자세히 보기 →</span>
+                  </div>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <footer class="border-t border-line pt-6 text-xs text-muted">
+        © {new Date().getFullYear()} {profile.name}
+      </footer>
+    </main>
+  </div>
+</Layout>
