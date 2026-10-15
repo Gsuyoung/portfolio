@@ -1,0 +1,30 @@
+---
+const year = new Date().getFullYear();
+---
+
+<div class="sticker">PORTFOLIO {year}</div>
+
+<style>
+  .sticker {
+    position: absolute;
+    left: 6%;
+    top: 500px;
+    z-index: 5;
+    padding: 8px 14px;
+    background: var(--color-lime);
+    color: var(--color-ink);
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: 12.5px;
+    letter-spacing: 0.08em;
+    transform: rotate(-8deg);
+    box-shadow: 0 8px 18px -10px rgb(0 0 0 / 0.6);
+  }
+  @media (max-width: 900px) {
+    .sticker {
+      left: auto;
+      right: 10px;
+      top: 200px;
+    }
+  }
+</style>

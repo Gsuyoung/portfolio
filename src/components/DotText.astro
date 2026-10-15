@@ -1,0 +1,136 @@
+---
+// 글자를 점(도트 매트릭스)으로 찍어 보여줍니다.
+// 캔버스는 장식이라 스크린리더에서 숨기고, 실제 글자는 sr-only 와 noscript 로 함께 둡니다.
+interface Props {
+  text: string;
+  color: string;
+  font: "sans" | "mono";
+  density: number;
+  align?: "left" | "center";
+  class?: string;
+}
+
+const { text, color, font, density, align = "left", class: className } = Astro.props;
+---
+
+<span class:list={["dot-text", className]}>
+  <canvas
+    aria-hidden="true"
+    data-dot-text={text}
+    data-color={color}
+    data-font={font}
+    data-density={density}
+    data-align={align}></canvas>
+  <span class="sr-only">{text}</span>
+  <noscript><span class="dot-text-fallback" style={`color:${color}`}>{text}</span></noscript>
+</span>
+
+<style>
+  .dot-text {
+    position: relative;
+    display: block;
+  }
+  canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  /* 프린터가 찍어 나가듯 왼쪽에서 오른쪽으로 0.6초 동안 드러납니다. */
+  canvas:global(.printing) {
+    animation: print 0.6s steps(24, end);
+  }
+  @keyframes print {
+    from {
+      clip-path: inset(0 100% 0 0);
+    }
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    canvas:global(.printing) {
+      animation: none;
+    }
+  }
+  .dot-text-fallback {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-size: clamp(32px, 8vw, 96px);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+</style>
+
+<script>
+  const FONTS = {
+    sans: { family: '"IBM Plex Sans KR", sans-serif', fit: 1.0 },
+    mono: { family: '"IBM Plex Mono", monospace', fit: 1.6 },
+  } as const;
+
+  type Dot = { x: number; y: number; r: number };
+
+  // 보이지 않는 캔버스에 글자를 그린 뒤 격자 단위로 샘플링해 점 좌표를 얻습니다.
+  function sampleDots(canvas: HTMLCanvasElement, w: number, h: number): Dot[] {
+    const text = canvas.dataset.dotText ?? "";
+    const font = FONTS[(canvas.dataset.font as keyof typeof FONTS) ?? "sans"];
+    const density = Number(canvas.dataset.density);
+    const off = document.createElement("canvas");
+    off.width = w;
+    off.height = h;
+    const o = off.getContext("2d", { willReadFrequently: true })!;
+    const size = Math.min(h * 0.86, (w / text.length) * font.fit);
+    o.font = `700 ${size}px ${font.family}`;
+    o.textBaseline = "middle";
+    const x0 = canvas.dataset.align === "center" ? (w - o.measureText(text).width) / 2 : 0;
+    o.fillText(text, x0, h / 2);
+    const data = o.getImageData(0, 0, w, h).data;
+    const step = Math.max(3, Math.round(size / density));
+    const dots: Dot[] = [];
+    for (let y = step / 2; y < h; y += step) {
+      for (let x = step / 2; x < w; x += step) {
+        if (data[((y | 0) * w + (x | 0)) * 4 + 3] > 110) dots.push({ x, y, r: step * 0.34 });
+      }
+    }
+    return dots;
+  }
+
+  function draw(canvas: HTMLCanvasElement, animate: boolean) {
+    const w = canvas.clientWidth;
+    const h = canvas.clientHeight;
+    if (!w || !h) return;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    const ctx = canvas.getContext("2d")!;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.fillStyle = canvas.dataset.color ?? "#141414";
+    const dots = sampleDots(canvas, w, h);
+    ctx.clearRect(0, 0, w, h);
+    for (const d of dots) {
+      ctx.beginPath();
+      ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    // 점은 항상 끝까지 그려 두고, 찍혀 나가는 연출은 CSS 로만 합니다.
+    // (rAF 는 백그라운드 탭에서 멈춰 그림이 반쯤 남을 수 있음)
+    if (animate) {
+      canvas.classList.remove("printing");
+      void canvas.offsetWidth;
+      canvas.classList.add("printing");
+    }
+  }
+
+  const canvases = () => document.querySelectorAll<HTMLCanvasElement>("canvas[data-dot-text]");
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  canvases().forEach((c) => draw(c, false));
+  document.fonts?.ready.then(() => canvases().forEach((c) => draw(c, !reduced)));
+
+  let timer: number | undefined;
+  window.addEventListener("resize", () => {
+    clearTimeout(timer);
+    timer = window.setTimeout(() => canvases().forEach((c) => draw(c, false)), 120);
+  });
+</script>

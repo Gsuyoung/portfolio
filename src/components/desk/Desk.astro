@@ -1,0 +1,32 @@
+---
+import Cover from "./Cover.astro";
+import Letter from "./Letter.astro";
+import Blueprint from "./Blueprint.astro";
+import Tag from "./Tag.astro";
+import Sticker from "./Sticker.astro";
+---
+
+<section class="desk" aria-label="첫 화면">
+  <Cover />
+  <Blueprint />
+  <Letter />
+  <Tag />
+  <Sticker />
+</section>
+
+<style>
+  .desk {
+    position: relative;
+    height: 700px;
+  }
+  .desk :global(.cover .name) {
+    height: 100%;
+  }
+  @media (max-width: 900px) {
+    .desk {
+      height: auto;
+      display: grid;
+      padding: 10px 6px 20px;
+    }
+  }
+</style>

@@ -1,0 +1,79 @@
+---
+// 첫 화면의 설계도면. 특정 프로젝트가 아닌 일반적인 백엔드 요청 흐름 그림입니다.
+---
+
+<div class="sheet blueprint" aria-label="시스템 구성 도면">
+  <svg viewBox="0 0 360 230" fill="none" stroke="#141414" stroke-width="1.4" font-family="IBM Plex Mono, monospace" font-size="10">
+    <rect x="14" y="20" width="76" height="38" fill="#f3f1ec"></rect>
+    <text x="52" y="43" text-anchor="middle" fill="#141414" stroke="none">CLIENT</text>
+    <path d="M90 39 H140"></path><path d="M134 34 L140 39 L134 44"></path>
+    <rect x="140" y="12" width="112" height="56" fill="#f3f1ec"></rect>
+    <text x="196" y="36" text-anchor="middle" fill="#141414" stroke="none">SPRING BOOT</text>
+    <text x="196" y="52" text-anchor="middle" fill="#55524c" stroke="none" font-size="9">REST API</text>
+    <path d="M196 68 V112" stroke-dasharray="4 3"></path><path d="M191 106 L196 112 L201 106"></path>
+    <rect x="120" y="112" width="152" height="40" fill="#f3f1ec"></rect>
+    <text x="196" y="136" text-anchor="middle" fill="#141414" stroke="none">SERVICE LAYER</text>
+    <path d="M150 152 V188"></path><path d="M242 152 V188"></path>
+    <rect x="104" y="188" width="92" height="30" fill="#f3f1ec"></rect>
+    <text x="150" y="207" text-anchor="middle" fill="#141414" stroke="none">MySQL</text>
+    <rect x="204" y="188" width="92" height="30" fill="#f3f1ec"></rect>
+    <text x="250" y="207" text-anchor="middle" fill="#141414" stroke="none">Redis</text>
+    <circle cx="320" cy="40" r="16"></circle><path d="M320 24 V56 M304 40 H336" stroke-width=".8"></path>
+    <text x="320" y="72" text-anchor="middle" fill="#55524c" stroke="none" font-size="8">N</text>
+  </svg>
+  <div class="titleblock">
+    <div><span class="label">Drawing</span><br />SYSTEM OVERVIEW</div>
+    <div><span class="label">Scale</span><br />1 : 1</div>
+    <div><span class="label">No.</span><br />A-01</div>
+  </div>
+</div>
+
+<style>
+  .blueprint {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 36%;
+    height: 330px;
+    transform: rotate(-7deg);
+    z-index: 2;
+    padding: 14px;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    background-image:
+      linear-gradient(var(--color-hair) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-hair) 1px, transparent 1px);
+    background-size: 18px 18px;
+  }
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+  .titleblock {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    border: 1.5px solid var(--color-ink);
+    background: var(--color-paper);
+    font-size: 10.5px;
+  }
+  .titleblock > div {
+    padding: 4px 8px;
+    border-right: 1px solid var(--color-ink);
+  }
+  .titleblock > div:last-child {
+    border-right: 0;
+  }
+  @media (max-width: 900px) {
+    .blueprint {
+      position: relative;
+      right: auto;
+      top: auto;
+      order: -1;
+      width: 80%;
+      height: 230px;
+      margin-bottom: -30px;
+      transform: rotate(-3deg);
+      z-index: 0;
+    }
+  }
+</style>

@@ -3,6 +3,7 @@ import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { getCollection } from "astro:content";
 import Layout from "../layouts/Layout.astro";
+import Desk from "../components/desk/Desk.astro";
 import SkillTags from "../components/SkillTags.astro";
 import SectionTitle from "../components/SectionTitle.astro";
 import { profile, experience } from "../data/profile";
@@ -19,6 +20,9 @@ const hasResume =
 ---
 
 <Layout>
+  <div class="mx-auto max-w-[1160px] px-4 pt-7">
+    <Desk />
+  </div>
   <div class="lg:grid lg:min-h-screen lg:grid-cols-[300px_1fr]">
     <!-- 사이드바: 데스크톱에서는 화면 왼쪽에 고정, 모바일에서는 상단 프로필 -->
     <aside class="bg-navy-800 text-[#e6ebf1] lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto">
