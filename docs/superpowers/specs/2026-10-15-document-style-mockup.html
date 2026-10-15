@@ -1,0 +1,527 @@
+<title>서류철 포트폴리오 시안</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: 어두운 책상 위 서류 콜라주(첫 화면) → 반듯하게 놓인 서류 양식(본문) → 기술 명세서(프로젝트 상세). 한 가지 룩으로 고정한 다크 디자인 */
+:root {
+  color-scheme: dark;
+  --desk: #161616;
+  --desk-2: #1f1f1f;
+  --paper: #f3f1ec;
+  --paper-2: #e9e6df;
+  --kraft: #c8a575;
+  --kraft-ink: #3b2c18;
+  --ink: #141414;
+  --ink-soft: #55524c;
+  --rule: #1b1b1b;
+  --hair: #c9c5bc;
+  --lime: #c8f53d;
+  --sans: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+}
+* { box-sizing: border-box; }
+body {
+  background:
+    radial-gradient(1200px 600px at 70% -10%, #2a2a2a 0%, transparent 60%),
+    radial-gradient(900px 500px at 0% 40%, #222 0%, transparent 60%),
+    var(--desk);
+  color: var(--paper);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.65;
+}
+.wrap {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding-block: 28px 80px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.note {
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px;
+  font-family: var(--mono); font-size: 12px; color: #9a968e; letter-spacing: .02em;
+  border-bottom: 1px solid #333; padding-bottom: 12px;
+}
+.note b { color: var(--lime); font-weight: 500; }
+.label {
+  font-family: var(--mono); font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase;
+}
+
+/* ───────── 첫 화면: 책상 위 콜라주 ───────── */
+.desk { position: relative; height: 700px; margin-top: 28px; }
+.sheet {
+  position: absolute; color: var(--ink); background: var(--paper);
+  box-shadow: 0 1px 0 rgba(255,255,255,.4) inset, 0 30px 60px -25px rgba(0,0,0,.8), 0 8px 18px -10px rgba(0,0,0,.6);
+}
+/* 1. 크래프트 표지 */
+.cover {
+  left: 0; top: 30px; width: 46%; height: 470px; background: var(--kraft); color: var(--kraft-ink);
+  transform: rotate(-4deg); padding: 30px 34px; display: grid; grid-template-rows: auto 1fr auto;
+  background-image: radial-gradient(rgba(0,0,0,.05) 1px, transparent 1px); background-size: 3px 3px;
+}
+.cover .top { display: flex; justify-content: space-between; gap: 12px; }
+.cover canvas { width: 100%; height: 100%; display: block; }
+.cover .bottom { display: flex; justify-content: space-between; align-items: end; gap: 16px; }
+.cover .role { font-family: var(--mono); font-size: 13px; font-weight: 600; letter-spacing: .18em; }
+.barcode { display: flex; gap: 2px; height: 34px; align-items: stretch; }
+.barcode i { display: block; background: var(--kraft-ink); }
+
+/* 2. 레터헤드 서류 */
+.letter {
+  left: 40%; top: 120px; width: 40%; min-height: 520px; transform: rotate(6deg); padding: 0; z-index: 3;
+}
+.letter-head { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1.5px solid var(--rule); }
+.letter-head > div { padding: 12px 16px; border-right: 1px solid var(--rule); font-size: 12px; }
+.letter-head > div:last-child { border-right: 0; }
+.letter-head .who { font-family: var(--mono); font-weight: 600; font-size: 14px; letter-spacing: .06em; }
+.letter-body { padding: 22px 22px 18px; font-family: var(--mono); font-size: 12.5px; line-height: 1.9; }
+.letter-body p { margin: 0 0 10px; }
+.letter-body .dear { font-weight: 600; font-size: 14px; margin-bottom: 14px; }
+.letter-foot { display: grid; grid-template-columns: 1fr 1fr; border-top: 1.5px solid var(--rule); }
+.letter-foot > div { padding: 10px 16px; border-right: 1px solid var(--rule); min-height: 64px; }
+.letter-foot > div:last-child { border-right: 0; }
+.sign { font-family: "Brush Script MT", "Segoe Script", cursive; font-size: 26px; line-height: 1; margin-top: 6px; }
+
+/* 3. 설계도면 */
+.blueprint {
+  right: 0; top: 0; width: 36%; height: 330px; transform: rotate(-7deg); z-index: 2;
+  background-color: var(--paper);
+  background-image: linear-gradient(var(--hair) 1px, transparent 1px), linear-gradient(90deg, var(--hair) 1px, transparent 1px);
+  background-size: 18px 18px; padding: 14px; display: grid; grid-template-rows: 1fr auto;
+}
+.blueprint svg { width: 100%; height: 100%; }
+.titleblock { display: grid; grid-template-columns: 2fr 1fr 1fr; border: 1.5px solid var(--rule); background: var(--paper); font-size: 10.5px; }
+.titleblock > div { padding: 4px 8px; border-right: 1px solid var(--rule); }
+.titleblock > div:last-child { border-right: 0; }
+
+/* 4. 금속 태그 */
+.tag {
+  right: 1%; top: 470px; width: 230px; height: 96px; z-index: 4; border-radius: 12px;
+  background: linear-gradient(145deg, #fafafa, #d8d8d8 55%, #bdbdbd); padding: 9px; transform: rotate(-14deg);
+}
+.tag .face { height: 100%; border-radius: 6px; background: #f6f6f4; border: 1px solid #a9a9a9; display: grid; place-items: center; overflow: hidden; }
+.tag canvas { width: 92%; height: 70%; }
+.tag::before {
+  content: ""; position: absolute; left: -26px; top: 32px; width: 34px; height: 34px; border-radius: 50%;
+  border: 5px solid #cfcfcf; box-shadow: 0 2px 4px rgba(0,0,0,.5);
+}
+/* 5. 라임 스티커 */
+.sticker {
+  left: 6%; top: 500px; z-index: 5; background: var(--lime); color: var(--ink);
+  padding: 8px 14px; transform: rotate(-8deg); font-family: var(--mono); font-weight: 600; font-size: 12.5px; letter-spacing: .08em;
+}
+
+/* ───────── 본문: 반듯한 서류 ───────── */
+.file { margin-top: 64px; background: var(--paper); color: var(--ink); box-shadow: 0 30px 60px -30px rgba(0,0,0,.9); }
+.file-tabs { display: flex; gap: 4px; padding: 0 20px; transform: translateY(-100%); position: absolute; }
+.file-wrap { position: relative; }
+.file-tabs span {
+  background: var(--paper-2); color: var(--ink-soft); padding: 6px 14px 4px; font-family: var(--mono); font-size: 11.5px; letter-spacing: .08em;
+  border-radius: 6px 6px 0 0;
+}
+.file-tabs span.on { background: var(--paper); color: var(--ink); font-weight: 600; }
+.form-head { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; border-bottom: 2px solid var(--rule); }
+.form-head > div { padding: 14px 18px; border-right: 1px solid var(--rule); min-width: 0; }
+.form-head > div:last-child { border-right: 0; }
+.form-head .title { font-size: 22px; font-weight: 700; letter-spacing: -.01em; }
+.form-head .v { font-family: var(--mono); font-size: 13px; margin-top: 2px; overflow-wrap: anywhere; }
+.row { display: grid; grid-template-columns: 200px 1fr; border-bottom: 1px solid var(--rule); }
+.row:last-child { border-bottom: 0; }
+.row > .k { padding: 22px 18px; border-right: 1px solid var(--rule); display: grid; align-content: start; gap: 4px; }
+.row > .k .no { font-family: var(--mono); font-size: 12px; color: var(--ink-soft); }
+.row > .k h2 { margin: 0; font-size: 17px; font-weight: 700; }
+.row > .v { padding: 22px 24px; min-width: 0; }
+.about p { margin: 0; max-width: 62ch; font-size: 16px; }
+.about p + p { margin-top: 8px; color: var(--ink-soft); font-size: 15px; }
+.checks { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px 28px; }
+.checks h3 { margin: 0 0 6px; }
+.checks ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 3px; font-size: 14.5px; }
+.checks li { display: flex; align-items: center; gap: 8px; }
+.checks li::before {
+  content: "✓"; display: grid; place-items: center; width: 15px; height: 15px; border: 1.5px solid var(--rule);
+  font-size: 11px; font-weight: 700; line-height: 1;
+}
+table.ledger { width: 100%; min-width: 480px; border-collapse: collapse; font-size: 14.5px; }
+.ledger th { text-align: left; font-weight: 500; padding: 0 12px 8px 0; border-bottom: 1.5px solid var(--rule); color: var(--ink-soft); }
+.ledger td { padding: 12px 12px 12px 0; border-bottom: 1px solid var(--hair); vertical-align: top; }
+.ledger td.mono { font-family: var(--mono); font-size: 13px; white-space: nowrap; }
+.ledger-wrap { overflow-x: auto; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
+.card { border: 1.5px solid var(--rule); display: grid; grid-template-rows: auto 1fr auto; background: #fbfaf7; position: relative; }
+.card .ch { display: flex; justify-content: space-between; gap: 8px; padding: 8px 12px; border-bottom: 1px solid var(--rule); font-family: var(--mono); font-size: 11.5px; }
+.card .cb { padding: 16px 16px 14px; display: grid; gap: 6px; align-content: start; }
+.card h3 { margin: 0; font-size: 18px; }
+.card p { margin: 0; color: var(--ink-soft); font-size: 14px; }
+.card .metric { font-family: var(--mono); font-size: 13px; color: var(--ink); margin-top: 4px; }
+.card .metric mark { background: var(--lime); color: var(--ink); padding: 0 4px; }
+.card .cf { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; padding: 10px 12px; border-top: 1px dashed var(--ink-soft); }
+.chips { display: flex; flex-wrap: wrap; gap: 4px; }
+.chips span { font-family: var(--mono); font-size: 11.5px; border: 1px solid var(--ink-soft); padding: 0 6px; }
+.open { font-family: var(--mono); font-size: 12.5px; font-weight: 600; color: var(--ink); }
+.stamp {
+  position: absolute; right: 14px; top: 44px; width: 64px; height: 64px; border-radius: 50%;
+  border: 2px solid #b8352a; color: #b8352a; display: grid; place-items: center; text-align: center;
+  font-family: var(--mono); font-size: 9.5px; font-weight: 600; line-height: 1.2; transform: rotate(14deg); opacity: .85;
+}
+.contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0; border: 1px solid var(--rule); }
+.contact-grid > div { padding: 12px 14px; border-right: 1px solid var(--rule); min-width: 0; }
+.contact-grid > div:last-child { border-right: 0; }
+.contact-grid .v { font-family: var(--mono); font-size: 13.5px; overflow-wrap: anywhere; margin-top: 2px; }
+.contact-grid a { color: var(--ink); }
+
+/* ───────── 프로젝트 상세: 기술 명세서 ───────── */
+.section-cap { margin: 80px 0 16px; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.section-cap h2 { margin: 0; font-size: 20px; color: var(--paper); }
+.section-cap span { font-family: var(--mono); font-size: 12px; color: #9a968e; }
+.spec { background: var(--paper); color: var(--ink); max-width: 900px; margin: 0 auto; box-shadow: 0 30px 60px -30px rgba(0,0,0,.9); }
+.spec-top { display: grid; grid-template-columns: 1fr auto; border-bottom: 2px solid var(--rule); }
+.spec-top .t { padding: 22px 24px; border-right: 1px solid var(--rule); min-width: 0; }
+.spec-top .t h3 { margin: 6px 0 4px; font-size: clamp(22px, 3.4vw, 30px); line-height: 1.25; text-wrap: balance; }
+.spec-top .t p { margin: 0; color: var(--ink-soft); }
+.approve { display: grid; grid-template-columns: repeat(3, 76px); }
+.approve > div { border-right: 1px solid var(--rule); display: grid; grid-template-rows: auto 1fr; text-align: center; }
+.approve > div:last-child { border-right: 0; }
+.approve .label { border-bottom: 1px solid var(--rule); padding: 6px 0; }
+.approve .s { display: grid; place-items: center; font-family: "Brush Script MT", "Segoe Script", cursive; font-size: 19px; min-height: 64px; }
+.approve .s.empty { color: var(--hair); font-family: var(--mono); font-size: 11px; }
+.spec-meta { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--rule); }
+.spec-meta > div { padding: 10px 16px; border-right: 1px solid var(--rule); min-width: 0; }
+.spec-meta > div:last-child { border-right: 0; }
+.spec-meta .v { font-size: 14px; margin-top: 2px; }
+.spec-body { padding: 8px 24px 30px; }
+.clause { display: grid; grid-template-columns: 56px 1fr; gap: 0 12px; padding: 22px 0; border-bottom: 1px solid var(--hair); }
+.clause:last-child { border-bottom: 0; }
+.clause .n { font-family: var(--mono); font-size: 13px; font-weight: 600; padding-top: 2px; }
+.clause h4 { margin: 0 0 10px; font-size: 17px; }
+.clause p, .clause li { color: #35332f; }
+.clause ul { margin: 0; padding-left: 18px; }
+.drawing {
+  border: 1.5px solid var(--rule); background-color: #fbfaf7;
+  background-image: linear-gradient(var(--paper-2) 1px, transparent 1px), linear-gradient(90deg, var(--paper-2) 1px, transparent 1px);
+  background-size: 20px 20px; overflow-x: auto;
+}
+.drawing svg { display: block; min-width: 600px; width: 100%; height: auto; }
+.drawing .titleblock { border-width: 1.5px 0 0; }
+.form-table { border: 1.5px solid var(--rule); }
+.form-table > div { display: grid; grid-template-columns: 84px 1fr; border-top: 1px solid var(--rule); }
+.form-table > div:first-child { border-top: 0; }
+.form-table .k { padding: 12px; border-right: 1px solid var(--rule); font-weight: 600; font-size: 13.5px; background: var(--paper-2); }
+.form-table .v { padding: 12px 14px; font-size: 14.5px; min-width: 0; }
+.form-table .result .k { background: var(--lime); }
+.form-table code { font-family: var(--mono); font-size: 12.5px; background: var(--paper-2); padding: 1px 5px; }
+.fine { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); border-top: 1.5px solid var(--rule); padding: 12px 24px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+
+.legend { margin-top: 56px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; color: #c9c5bc; font-size: 14px; }
+.legend h3 { margin: 0 0 4px; font-size: 14px; color: var(--paper); }
+.legend p { margin: 0; }
+
+a:focus-visible { outline: 2px solid var(--lime); outline-offset: 2px; }
+
+/* ───────── 반응형 ───────── */
+@media (max-width: 900px) {
+  .desk { height: auto; display: grid; gap: 0; padding: 10px 6px 20px; }
+  .sheet { position: relative; left: auto; right: auto; top: auto; width: auto; }
+  .cover { height: 340px; transform: rotate(-2deg); }
+  .letter { transform: rotate(2.5deg); margin-top: -40px; min-height: 0; width: 92%; justify-self: end; }
+  .blueprint { order: -1; height: 230px; width: 80%; transform: rotate(-3deg); margin-bottom: -30px; z-index: 0; }
+  .tag { width: 200px; height: 84px; justify-self: start; margin: 14px 0 0 30px; transform: rotate(-8deg); }
+  .sticker { position: absolute; left: auto; right: 10px; top: 200px; }
+  .form-head { grid-template-columns: 1fr 1fr; }
+  .form-head > div:nth-child(2) { border-right: 0; }
+  .form-head > div:nth-child(-n+2) { border-bottom: 1px solid var(--rule); }
+  .row { grid-template-columns: 1fr; }
+  .row > .k { border-right: 0; border-bottom: 1px dashed var(--hair); padding-bottom: 10px; }
+  .spec-top { grid-template-columns: 1fr; }
+  .spec-top .t { border-right: 0; border-bottom: 1px solid var(--rule); }
+  .approve { grid-template-columns: repeat(3, 1fr); }
+  .spec-meta { grid-template-columns: 1fr 1fr; }
+  .spec-meta > div:nth-child(2) { border-right: 0; }
+  .spec-meta > div:nth-child(-n+2) { border-bottom: 1px solid var(--rule); }
+}
+@media (max-width: 520px) {
+  .letter-head, .letter-foot { grid-template-columns: 1fr; }
+  .letter-head > div, .letter-foot > div { border-right: 0; border-bottom: 1px solid var(--rule); }
+  .letter-foot > div:last-child { border-bottom: 0; }
+  .clause { grid-template-columns: 1fr; }
+  .clause .n { margin-bottom: 4px; }
+  .spec-body { padding: 4px 16px 24px; }
+  .row > .v { padding: 18px 16px; }
+}
+</style>
+
+<div class="wrap">
+  <div class="note">
+    <span>시안 · 서류철 스타일 (레퍼런스: 앨범 패키지의 분위기만 참고)</span>
+    <span><b>●</b> 문구와 수치는 화면 느낌을 위한 예시입니다</span>
+  </div>
+
+  <!-- ① 첫 화면: 책상 위 서류 콜라주 -->
+  <section class="desk" aria-label="첫 화면">
+    <div class="sheet cover">
+      <div class="top label"><span>Portfolio · Vol.01</span><span>2026</span></div>
+      <canvas id="dot-name" aria-label="구수영" role="img"></canvas>
+      <div class="bottom">
+        <div>
+          <div class="role">BACKEND DEVELOPER</div>
+          <div class="label" style="margin-top:4px">Java · Spring Boot · MySQL · Redis</div>
+        </div>
+        <div class="barcode" aria-hidden="true" id="barcode"></div>
+      </div>
+    </div>
+
+    <div class="sheet blueprint" aria-label="시스템 구성 도면">
+      <svg viewBox="0 0 360 230" fill="none" stroke="#141414" stroke-width="1.4" font-family="IBM Plex Mono, monospace" font-size="10">
+        <rect x="14" y="20" width="76" height="38" fill="#f3f1ec"/><text x="52" y="43" text-anchor="middle" fill="#141414" stroke="none">CLIENT</text>
+        <path d="M90 39 H140" /><path d="M134 34 L140 39 L134 44" />
+        <rect x="140" y="12" width="112" height="56" fill="#f3f1ec"/><text x="196" y="36" text-anchor="middle" fill="#141414" stroke="none">SPRING BOOT</text>
+        <text x="196" y="52" text-anchor="middle" fill="#55524c" stroke="none" font-size="9">REST API</text>
+        <path d="M196 68 V112" stroke-dasharray="4 3"/><path d="M191 106 L196 112 L201 106" />
+        <rect x="120" y="112" width="152" height="40" fill="#f3f1ec"/><text x="196" y="136" text-anchor="middle" fill="#141414" stroke="none">SERVICE LAYER</text>
+        <path d="M150 152 V188" /><path d="M242 152 V188" />
+        <rect x="104" y="188" width="92" height="30" fill="#f3f1ec"/><text x="150" y="207" text-anchor="middle" fill="#141414" stroke="none">MySQL</text>
+        <rect x="204" y="188" width="92" height="30" fill="#f3f1ec"/><text x="250" y="207" text-anchor="middle" fill="#141414" stroke="none">Redis</text>
+        <circle cx="320" cy="40" r="16" /><path d="M320 24 V56 M304 40 H336" stroke-width=".8"/>
+        <text x="320" y="72" text-anchor="middle" fill="#55524c" stroke="none" font-size="8">N</text>
+      </svg>
+      <div class="titleblock">
+        <div><span class="label">Drawing</span><br>SYSTEM OVERVIEW</div>
+        <div><span class="label">Scale</span><br>1 : 1</div>
+        <div><span class="label">No.</span><br>A-01</div>
+      </div>
+    </div>
+
+    <article class="sheet letter" aria-label="자기소개 서신">
+      <div class="letter-head">
+        <div><div class="label">From</div><div class="who">GU SUYOUNG</div><div>suyoung606123@gmail.com</div></div>
+        <div><div class="label">To</div><div class="who">HIRING TEAM</div><div>github.com/Gsuyoung</div></div>
+      </div>
+      <div class="letter-body">
+        <p class="dear">안녕하세요, 백엔드 개발자 구수영입니다.</p>
+        <p>요청이 들어와서 응답이 나갈 때까지의 흐름을 이해하고, 그 과정을 더 빠르고 안전하게 만드는 일을 좋아합니다.</p>
+        <p>인증과 권한, API 설계, 쿼리 성능 개선을 주로 다뤄 왔습니다. 아래 서류철에 그 기록을 정리했습니다.</p>
+        <p>[기록된 구간] [기록된 구간] [기록된 구간]</p>
+      </div>
+      <div class="letter-foot">
+        <div><div class="label">Date</div><div style="font-family:var(--mono);font-size:13px">2026. 10. 15</div></div>
+        <div><div class="label">Signature</div><div class="sign">Suyoung Gu</div></div>
+      </div>
+    </article>
+
+    <div class="sheet tag" aria-hidden="true"><div class="face"><canvas id="dot-tag"></canvas></div></div>
+    <div class="sheet sticker">PORTFOLIO 2026</div>
+  </section>
+
+  <!-- ② 본문: 반듯한 서류 양식 -->
+  <div class="file-wrap">
+    <div class="file-tabs" aria-hidden="true"><span class="on">01 PROFILE</span><span>02 PROJECTS</span><span>03 CONTACT</span></div>
+    <section class="file" aria-label="이력 서류">
+      <div class="form-head">
+        <div><div class="label">Document</div><div class="title">개발자 이력 기록부</div></div>
+        <div><div class="label">Name</div><div class="v">구수영 / GU SUYOUNG</div></div>
+        <div><div class="label">Position</div><div class="v">Backend Developer</div></div>
+        <div><div class="label">Doc No.</div><div class="v">GSY-2026-001</div></div>
+      </div>
+
+      <div class="row">
+        <div class="k"><span class="no">§ 01</span><h2>소개</h2><span class="label">About</span></div>
+        <div class="v about">
+          <p>서비스 뒤편의 흐름을 끝까지 추적하고, 더 빠르고 안전하게 만드는 백엔드 개발자입니다.</p>
+          <p>문제가 생기면 로그와 쿼리부터 확인하고, 해결한 과정은 반드시 기록으로 남깁니다.</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="k"><span class="no">§ 02</span><h2>보유 기술</h2><span class="label">Skills</span></div>
+        <div class="v checks">
+          <div><h3 class="label">Language</h3><ul><li>Java</li><li>SQL</li></ul></div>
+          <div><h3 class="label">Framework</h3><ul><li>Spring Boot</li><li>Spring Security</li><li>JPA · MyBatis</li></ul></div>
+          <div><h3 class="label">Data</h3><ul><li>MySQL · MariaDB</li><li>Redis</li></ul></div>
+          <div><h3 class="label">Infra · Tool</h3><ul><li>Docker</li><li>Git · JUnit</li></ul></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="k"><span class="no">§ 03</span><h2>경력</h2><span class="label">Experience</span></div>
+        <div class="v ledger-wrap">
+          <table class="ledger">
+            <thead><tr><th>기간</th><th>소속 · 직무</th><th>주요 업무</th></tr></thead>
+            <tbody>
+              <tr><td class="mono">20XX.XX – 현재</td><td><b>회사명</b><br>백엔드 개발</td><td>사내 인트라넷 API 설계 및 개발, 관리자 권한 체계 구현</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="k"><span class="no">§ 04</span><h2>프로젝트</h2><span class="label">Projects</span></div>
+        <div class="v cards">
+          <article class="card">
+            <div class="ch"><span>FILE 01</span><span>2025.01 – 03</span></div>
+            <div class="cb">
+              <h3>프로젝트 이름</h3>
+              <p>어떤 서비스인지 한 줄로 소개합니다.</p>
+              <p class="metric">조회 응답 <mark>820ms → 140ms</mark></p>
+            </div>
+            <div class="cf"><div class="chips"><span>Spring Boot</span><span>JPA</span><span>MySQL</span></div><span class="open">명세서 열기 →</span></div>
+            <div class="stamp" aria-hidden="true">검토<br>완료</div>
+          </article>
+          <article class="card">
+            <div class="ch"><span>FILE 02</span><span>2025.05 – 07</span></div>
+            <div class="cb">
+              <h3>프로젝트 이름</h3>
+              <p>어떤 서비스인지 한 줄로 소개합니다.</p>
+              <p class="metric">로그인 방식 <mark>3종</mark> 통합</p>
+            </div>
+            <div class="cf"><div class="chips"><span>Spring Security</span><span>OAuth2</span></div><span class="open">명세서 열기 →</span></div>
+          </article>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="k"><span class="no">§ 05</span><h2>연락처</h2><span class="label">Contact</span></div>
+        <div class="v">
+          <div class="contact-grid">
+            <div><div class="label">E-mail</div><div class="v">suyoung606123@gmail.com</div></div>
+            <div><div class="label">GitHub</div><div class="v"><a href="https://github.com/Gsuyoung" target="_blank" rel="noopener">github.com/Gsuyoung</a></div></div>
+            <div><div class="label">Resume</div><div class="v">resume.pdf</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ③ 프로젝트 상세: 기술 명세서 -->
+  <div class="section-cap"><h2>프로젝트 상세 페이지</h2><span>‘명세서 열기’를 누르면 열리는 화면</span></div>
+  <article class="spec" aria-label="기술 명세서 예시">
+    <div class="spec-top">
+      <div class="t">
+        <span class="label">Technical Specification · FILE 01</span>
+        <h3>프로젝트 이름 · 기술 명세서</h3>
+        <p>어떤 서비스인지 한두 줄로 소개합니다.</p>
+      </div>
+      <div class="approve" aria-label="결재란">
+        <div><span class="label">작성</span><span class="s">S. Gu</span></div>
+        <div><span class="label">검토</span><span class="s">S. Gu</span></div>
+        <div><span class="label">승인</span><span class="s empty">YOU?</span></div>
+      </div>
+    </div>
+    <div class="spec-meta">
+      <div><div class="label">기간</div><div class="v">2025.01 – 2025.03</div></div>
+      <div><div class="label">역할</div><div class="v">백엔드 · 인증, API</div></div>
+      <div><div class="label">팀</div><div class="v">백엔드 3 · 프론트 2</div></div>
+      <div><div class="label">기술</div><div class="v">Spring Boot, JPA, MySQL</div></div>
+    </div>
+    <div class="spec-body">
+      <section class="clause">
+        <span class="n">제1조</span>
+        <div>
+          <h4>시스템 구성</h4>
+          <div class="drawing">
+            <svg viewBox="0 0 640 220" fill="none" stroke="#141414" stroke-width="1.4" font-family="IBM Plex Mono, monospace" font-size="11">
+              <rect x="20" y="86" width="96" height="44" fill="#fbfaf7"/><text x="68" y="112" text-anchor="middle" fill="#141414" stroke="none">Client</text>
+              <path d="M116 108 H176"/><path d="M170 103 L176 108 L170 113"/>
+              <text x="146" y="100" text-anchor="middle" fill="#55524c" stroke="none" font-size="9">HTTPS · JWT</text>
+              <rect x="176" y="40" width="200" height="136" fill="#fbfaf7" stroke-dasharray="6 4"/>
+              <text x="186" y="56" fill="#55524c" stroke="none" font-size="9">SPRING BOOT APPLICATION</text>
+              <rect x="196" y="70" width="160" height="28" fill="#f3f1ec"/><text x="276" y="88" text-anchor="middle" fill="#141414" stroke="none">JwtAuthFilter</text>
+              <rect x="196" y="106" width="160" height="28" fill="#f3f1ec"/><text x="276" y="124" text-anchor="middle" fill="#141414" stroke="none">Controller</text>
+              <rect x="196" y="142" width="160" height="28" fill="#f3f1ec"/><text x="276" y="160" text-anchor="middle" fill="#141414" stroke="none">Service · Repository</text>
+              <path d="M376 140 H450"/><path d="M444 135 L450 140 L444 145"/>
+              <path d="M376 156 C410 156 410 190 450 190"/><path d="M444 185 L450 190 L444 195"/>
+              <rect x="450" y="120" width="120" height="40" fill="#fbfaf7"/><text x="510" y="144" text-anchor="middle" fill="#141414" stroke="none">MySQL</text>
+              <rect x="450" y="172" width="120" height="36" fill="#c8f53d"/><text x="510" y="194" text-anchor="middle" fill="#141414" stroke="none">Redis cache</text>
+              <path d="M590 30 h30 M590 30 v10 M620 30 v10" stroke-width=".8"/><text x="605" y="54" text-anchor="middle" fill="#55524c" stroke="none" font-size="8">SCALE 1:1</text>
+            </svg>
+            <div class="titleblock">
+              <div><span class="label">Drawing</span><br>REQUEST FLOW</div>
+              <div><span class="label">Rev.</span><br>02</div>
+              <div><span class="label">No.</span><br>A-01</div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="clause">
+        <span class="n">제2조</span>
+        <div>
+          <h4>담당 업무</h4>
+          <ul><li>REST API 설계 및 구현</li><li>JWT 액세스/리프레시 토큰 로그인과 재발급</li><li>목록 조회 성능 개선</li></ul>
+        </div>
+      </section>
+      <section class="clause">
+        <span class="n">제3조</span>
+        <div>
+          <h4>트러블슈팅 · 목록 조회가 느린 문제</h4>
+          <div class="form-table">
+            <div><span class="k">문제</span><span class="v">목록 API가 평균 800ms 이상 걸렸습니다.</span></div>
+            <div><span class="k">원인</span><span class="v">항목마다 작성자를 따로 조회하는 N+1 쿼리로, 요청 1번에 쿼리가 41번 실행됐습니다.</span></div>
+            <div><span class="k">해결</span><span class="v"><code>fetch join</code>과 <code>@BatchSize</code> 적용, 복합 인덱스 추가</span></div>
+            <div class="result"><span class="k">결과</span><span class="v">쿼리 41번 → 2번, 응답 820ms → 140ms</span></div>
+          </div>
+        </div>
+      </section>
+      <section class="clause">
+        <span class="n">제4조</span>
+        <div>
+          <h4>배운 점</h4>
+          <p style="margin:0">기능이 동작하는 것과 쓸 만한 속도가 나오는 것은 다르다는 걸 배웠습니다. 이후로 API를 만들 때 실행되는 쿼리 로그를 먼저 확인합니다.</p>
+        </div>
+      </section>
+    </div>
+    <div class="fine"><span>Terms &amp; Conditions · 본 명세서의 수치는 측정 환경에 따라 달라질 수 있습니다.</span><span>GSY-2026-001-F01</span></div>
+  </article>
+
+  <div class="legend">
+    <div><h3>레퍼런스에서 가져온 것</h3><p>도트 매트릭스 글자, 레터헤드와 양식의 칸·선, 설계도면, 서명, 크래프트지와 라임 포인트, 비스듬히 겹친 콜라주</p></div>
+    <div><h3>포트폴리오에 맞게 바꾼 것</h3><p>콜라주는 첫 화면에만 쓰고, 읽어야 하는 본문과 명세서는 반듯하게 놓았어요.</p></div>
+    <div><h3>모바일</h3><p>종이들이 세로로 겹쳐 쌓이고, 양식의 칸은 한 줄씩 아래로 내려가요.</p></div>
+  </div>
+</div>
+
+<script>
+  // 도트 매트릭스 글자: 글자를 보이지 않는 캔버스에 그린 뒤, 격자 단위로 샘플링해 점으로 다시 찍습니다.
+  function dotText(canvas, lines, opt) {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const w = canvas.clientWidth, h = canvas.clientHeight;
+    if (!w || !h) return;
+    canvas.width = w * dpr; canvas.height = h * dpr;
+    const ctx = canvas.getContext('2d');
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, w, h);
+    const off = document.createElement('canvas');
+    off.width = w; off.height = h;
+    const o = off.getContext('2d');
+    const size = Math.min(h / lines.length * 0.86, w / Math.max(...lines.map(l => l.length)) * opt.fit);
+    o.font = `700 ${size}px ${opt.font}`;
+    o.textBaseline = 'middle';
+    o.fillStyle = '#000';
+    const lh = size * 1.05, top = h / 2 - (lines.length - 1) * lh / 2;
+    lines.forEach((l, i) => o.fillText(l, opt.align === 'center' ? (w - o.measureText(l).width) / 2 : 0, top + i * lh));
+    const data = o.getImageData(0, 0, w, h).data;
+    const step = Math.max(3, Math.round(size / opt.density));
+    ctx.fillStyle = opt.color;
+    for (let y = step / 2; y < h; y += step) {
+      for (let x = step / 2; x < w; x += step) {
+        if (data[((y | 0) * w + (x | 0)) * 4 + 3] > 110) {
+          ctx.beginPath(); ctx.arc(x, y, step * 0.34, 0, Math.PI * 2); ctx.fill();
+        }
+      }
+    }
+  }
+  function render() {
+    dotText(document.getElementById('dot-name'), ['구수영'], { font: '"IBM Plex Sans KR", sans-serif', fit: 1.0, density: 26, color: '#3b2c18' });
+    dotText(document.getElementById('dot-tag'), ['GSY'], { font: '"IBM Plex Mono", monospace', fit: 1.6, density: 14, color: '#141414', align: 'center' });
+  }
+  // 바코드
+  const bc = document.getElementById('barcode');
+  [2,1,1,3,1,2,1,1,2,3,1,1,2,1,3,1,2,1,1,2,1,3,2,1].forEach((wd, i) => {
+    const b = document.createElement('i');
+    b.style.width = wd + 'px';
+    b.style.opacity = i % 2 ? '0' : '1';
+    bc.appendChild(b);
+  });
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(render);
+  render();
+  let t; window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(render, 120); });
+</script>
