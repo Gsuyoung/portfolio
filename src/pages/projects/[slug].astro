@@ -1,119 +1,86 @@
 ---
-import { getCollection, render } from "astro:content";
+import { render } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
+import SpecHeader from "../../components/spec/SpecHeader.astro";
+import TroubleshootingForm from "../../components/spec/TroubleshootingForm.astro";
 import { profile } from "../../data/profile";
-import { inline } from "../../lib/text";
+import { getPublishedProjects, type PublishedProject } from "../../lib/projects";
 
 export async function getStaticPaths() {
-  const projects = await getCollection("projects", ({ data }) => !data.draft);
+  const projects = await getPublishedProjects();
   return projects.map((project) => ({ params: { slug: project.id }, props: { project } }));
 }
 
-const { project } = Astro.props;
+const { project } = Astro.props as { project: PublishedProject };
 const { Content } = await render(project);
 const d = project.data;
-
-const meta = [
-  { label: "기간", value: d.period },
-  { label: "역할", value: d.role },
-  ...(d.team ? [{ label: "팀", value: d.team }] : []),
-  { label: "기술", value: d.stack.join(", ") },
-];
-const steps = [
-  { label: "문제", key: "problem" },
-  { label: "원인", key: "cause" },
-  { label: "해결", key: "solution" },
-  { label: "결과", key: "result" },
-] as const;
 ---
 
 <Layout title={`${d.title} | ${profile.name}`} description={d.summary}>
-  <header class="bg-navy-800 text-[#e6ebf1]">
-    <div class="mx-auto max-w-4xl px-5 pt-6 pb-9 sm:px-10">
-      <a href="/#projects" class="text-[13px] text-navy-300 hover:text-white">← Projects</a>
-      <h1 class="mt-5 text-[26px] leading-snug font-bold text-balance sm:text-[32px]">{d.title}</h1>
-      <p class="mt-1 max-w-[60ch] text-navy-200">{d.summary}</p>
-      <dl class="mt-6 grid gap-x-6 gap-y-3 border-t border-navy-600 pt-5 sm:grid-cols-2 md:grid-cols-4">
+  <main class="wrap">
+    <a href="/#projects" class="back">← 서류철로 돌아가기</a>
+
+    <article class="sheet spec">
+      <SpecHeader project={project} />
+
+      <div class="spec-body">
+        <div class="spec-prose">
+          <Content />
+        </div>
+
+        {d.troubleshooting.map((item) => <TroubleshootingForm item={item} />)}
+
         {
-          meta.map((m) => (
-            <div>
-              <dt class="text-[11px] tracking-[0.12em] text-navy-300 uppercase">{m.label}</dt>
-              <dd class="mt-0.5 text-sm">{m.value}</dd>
-            </div>
-          ))
+          d.lesson && (
+            <section class="spec-clause">
+              <h2>배운 점</h2>
+              <p>{d.lesson}</p>
+            </section>
+          )
         }
-      </dl>
-      {
-        (d.repo || d.demo) && (
-          <div class="mt-5 flex flex-wrap gap-2 text-[13px]">
-            {d.repo && (
-              <a
-                href={d.repo}
-                target="_blank"
-                rel="noopener"
-                class="rounded-md border border-navy-600 px-3 py-1.5 hover:border-navy-300"
-              >
-                GitHub 레포
-              </a>
-            )}
-            {d.demo && (
-              <a
-                href={d.demo}
-                target="_blank"
-                rel="noopener"
-                class="rounded-md bg-sky px-3 py-1.5 font-semibold text-[#102033]"
-              >
-                데모 보기
-              </a>
-            )}
-          </div>
-        )
-      }
-    </div>
-  </header>
+      </div>
 
-  <main class="mx-auto grid max-w-4xl gap-12 px-5 py-10 sm:px-10 sm:py-12">
-    <article class="prose-project">
-      <Content />
+      <div class="fine">
+        <span>Terms &amp; Conditions · 본 명세서의 수치는 측정 환경에 따라 달라질 수 있습니다.</span>
+        <span>{profile.docNo}-F{project.fileNo}</span>
+      </div>
     </article>
-
-    {
-      d.troubleshooting.map((t) => (
-        <section>
-          <h2 class="mb-3 text-[1.2rem] font-bold">트러블슈팅 · {t.title}</h2>
-          <dl class="overflow-hidden rounded-xl border border-line">
-            {steps.map((s) => (
-              <div
-                class:list={[
-                  "grid border-t border-line first:border-t-0 sm:grid-cols-[6rem_1fr]",
-                  s.key === "result" && "bg-[#f3f8ff]",
-                ]}
-              >
-                <dt
-                  class:list={[
-                    "px-4 pt-3 text-[13px] font-semibold sm:py-3.5",
-                    s.key === "result" ? "text-[#1f5fae] sm:bg-[#e8f2ff]" : "text-[#3c4a5a] sm:bg-[#f5f8fb]",
-                  ]}
-                >
-                  {s.label}
-                </dt>
-                <dd class="min-w-0 px-4 pt-1 pb-3.5 text-[14.5px] text-body sm:py-3.5" set:html={inline(t[s.key])} />
-              </div>
-            ))}
-          </dl>
-        </section>
-      ))
-    }
-
-    {
-      d.lesson && (
-        <section>
-          <h2 class="mb-3 text-[1.2rem] font-bold">배운 점</h2>
-          <p class="max-w-[65ch] leading-relaxed text-body">{d.lesson}</p>
-        </section>
-      )
-    }
-
-    <a href="/#projects" class="text-sm font-semibold text-accent hover:underline">← 프로젝트 목록으로</a>
   </main>
 </Layout>
+
+<style>
+  .wrap {
+    max-width: 948px;
+    margin: 0 auto;
+    padding: 28px max(16px, env(safe-area-inset-right, 0px)) 64px max(16px, env(safe-area-inset-left, 0px));
+  }
+  .back {
+    display: inline-block;
+    margin-bottom: 18px;
+    color: #c9c5bc;
+    font-family: var(--font-mono);
+    font-size: 13px;
+  }
+  .back:hover {
+    color: var(--color-lime);
+  }
+  .spec-body {
+    padding: 8px 24px 30px;
+  }
+  .fine {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 24px;
+    border-top: 1.5px solid var(--color-ink);
+    color: var(--color-ink-soft);
+    font-family: var(--font-mono);
+    font-size: 11px;
+  }
+  @media (max-width: 520px) {
+    .spec-body {
+      padding: 4px 16px 24px;
+    }
+  }
+</style>

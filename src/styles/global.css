@@ -47,6 +47,113 @@
     letter-spacing: 0.14em;
     text-transform: uppercase;
   }
+  /* 기술 명세서: 본문(Markdown)의 ## 과 트러블슈팅·배운 점 조항이 같은 "제N조" 번호를 이어 씁니다. */
+  .spec-body {
+    counter-reset: clause;
+  }
+  .spec-prose > h2,
+  .spec-clause > h2 {
+    counter-increment: clause;
+    display: flex;
+    gap: 12px;
+    margin: 0 0 12px;
+    padding-top: 22px;
+    border-top: 1px solid var(--color-hair);
+    font-size: 17px;
+    font-weight: 700;
+  }
+  .spec-prose > h2:first-child {
+    border-top: 0;
+  }
+  .spec-prose > h2::before,
+  .spec-clause > h2::before {
+    content: "제" counter(clause) "조";
+    flex: none;
+    width: 52px;
+    padding-top: 2px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+  }
+  .spec-clause {
+    margin-top: 22px;
+  }
+  .spec-clause > :not(h2),
+  .spec-prose > :not(h2) {
+    margin-left: 64px;
+  }
+  .spec-prose {
+    color: #35332f;
+    line-height: 1.8;
+  }
+  .spec-prose > * + * {
+    margin-top: 10px;
+  }
+  .spec-prose h3 {
+    margin-top: 18px;
+    color: var(--color-ink);
+    font-weight: 700;
+  }
+  .spec-prose ul,
+  .spec-prose ol {
+    padding-left: 18px;
+  }
+  .spec-prose ul {
+    list-style: square;
+  }
+  .spec-prose ol {
+    list-style: decimal;
+  }
+  .spec-prose a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .spec-prose strong {
+    color: var(--color-ink);
+  }
+  .spec-prose :not(pre) > code {
+    padding: 1px 5px;
+    background: var(--color-paper-2);
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+  }
+  .spec-prose blockquote {
+    padding-left: 12px;
+    border-left: 3px solid var(--color-hair);
+    color: var(--color-ink-soft);
+  }
+  /* 코드 블록은 모눈종이 위 도면처럼 보여줍니다. Shiki 의 다크 색을 덮어씁니다. */
+  .spec-prose pre {
+    overflow-x: auto;
+    padding: 18px 20px;
+    border: 1.5px solid var(--color-ink);
+    background-color: #fbfaf7 !important;
+    background-image:
+      linear-gradient(var(--color-paper-2) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-paper-2) 1px, transparent 1px);
+    background-size: 20px 20px;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    line-height: 1.75;
+  }
+  .spec-prose pre,
+  .spec-prose pre span {
+    color: var(--color-ink) !important;
+  }
+  .spec-prose img {
+    border: 1.5px solid var(--color-ink);
+  }
+  @media (max-width: 520px) {
+    .spec-prose > h2,
+    .spec-clause > h2 {
+      flex-direction: column;
+      gap: 2px;
+    }
+    .spec-clause > :not(h2),
+    .spec-prose > :not(h2) {
+      margin-left: 0;
+    }
+  }
+
   /* 책상 위에 놓인 종이 한 장 */
   .sheet {
     background: var(--color-paper);

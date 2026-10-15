@@ -1,0 +1,165 @@
+---
+import type { PublishedProject } from "../../lib/projects";
+import { profile } from "../../data/profile";
+
+interface Props {
+  project: PublishedProject;
+}
+const { project } = Astro.props;
+const d = project.data;
+
+// "Suyoung Gu" → "S. Gu"
+const [first, ...rest] = profile.nameSign.split(" ");
+const initials = `${first[0]}. ${rest.join(" ")}`;
+
+const meta = [
+  { label: "기간", value: d.period },
+  { label: "역할", value: d.role },
+  ...(d.team ? [{ label: "팀", value: d.team }] : []),
+  { label: "기술", value: d.stack.join(", ") },
+];
+const links = [
+  ...(d.repo ? [{ text: "GitHub 레포", href: d.repo }] : []),
+  ...(d.demo ? [{ text: "데모 보기", href: d.demo }] : []),
+];
+---
+
+<header>
+  <div class="top">
+    <div class="t">
+      <span class="label">Technical Specification · FILE {project.fileNo}</span>
+      <h1>{d.title}</h1>
+      <p>{d.summary}</p>
+      {
+        links.length > 0 && (
+          <div class="links">
+            {links.map((l) => (
+              <a href={l.href} target="_blank" rel="noopener">{l.text} ↗</a>
+            ))}
+          </div>
+        )
+      }
+    </div>
+    <div class="approve" aria-label="결재란">
+      <div><span class="label">작성</span><span class="s">{initials}</span></div>
+      <div><span class="label">검토</span><span class="s">{initials}</span></div>
+      <div><span class="label">승인</span><span class="s empty">YOU?</span></div>
+    </div>
+  </div>
+  <dl class="meta" style={`--cols:${meta.length}`}>
+    {
+      meta.map((m) => (
+        <div>
+          <dt class="label">{m.label}</dt>
+          <dd>{m.value}</dd>
+        </div>
+      ))
+    }
+  </dl>
+</header>
+
+<style>
+  .top {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    border-bottom: 2px solid var(--color-ink);
+  }
+  .t {
+    padding: 22px 24px;
+    border-right: 1px solid var(--color-ink);
+    min-width: 0;
+  }
+  h1 {
+    margin: 6px 0 4px;
+    font-size: clamp(22px, 3.4vw, 30px);
+    line-height: 1.25;
+    font-weight: 700;
+    text-wrap: balance;
+    overflow-wrap: anywhere;
+  }
+  .t p {
+    color: var(--color-ink-soft);
+  }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 10px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .links a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .approve {
+    display: grid;
+    grid-template-columns: repeat(3, 76px);
+  }
+  .approve > div {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    border-right: 1px solid var(--color-ink);
+    text-align: center;
+  }
+  .approve > div:last-child {
+    border-right: 0;
+  }
+  .approve .label {
+    padding: 6px 0;
+    border-bottom: 1px solid var(--color-ink);
+  }
+  .s {
+    display: grid;
+    place-items: center;
+    min-height: 64px;
+    font-family: var(--font-mono);
+    font-style: italic;
+    font-size: 15px;
+  }
+  .s.empty {
+    color: var(--color-hair);
+    font-style: normal;
+    font-size: 11px;
+  }
+  .meta {
+    display: grid;
+    grid-template-columns: repeat(var(--cols), 1fr);
+    border-bottom: 1px solid var(--color-ink);
+  }
+  .meta > div {
+    padding: 10px 16px;
+    border-right: 1px solid var(--color-ink);
+    min-width: 0;
+  }
+  .meta > div:last-child {
+    border-right: 0;
+  }
+  .meta dd {
+    margin-top: 2px;
+    font-size: 14px;
+    overflow-wrap: anywhere;
+  }
+  @media (max-width: 900px) {
+    .top {
+      grid-template-columns: 1fr;
+    }
+    .t {
+      border-right: 0;
+      border-bottom: 1px solid var(--color-ink);
+    }
+    .approve {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .meta {
+      grid-template-columns: 1fr 1fr;
+    }
+    .meta > div:nth-child(2n) {
+      border-right: 0;
+    }
+    .meta > div:nth-child(-n + 2) {
+      border-bottom: 1px solid var(--color-ink);
+    }
+  }
+</style>

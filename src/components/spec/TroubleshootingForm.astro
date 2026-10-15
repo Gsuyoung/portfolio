@@ -1,0 +1,68 @@
+---
+import { inline } from "../../lib/text";
+
+interface Props {
+  item: { title: string; problem: string; cause: string; solution: string; result: string };
+}
+const { item } = Astro.props;
+const rows = [
+  { label: "문제", key: "problem" },
+  { label: "원인", key: "cause" },
+  { label: "해결", key: "solution" },
+  { label: "결과", key: "result" },
+] as const;
+---
+
+<section class="spec-clause">
+  <h2>트러블슈팅 · {item.title}</h2>
+  <dl class="form">
+    {
+      rows.map((r) => (
+        <div class:list={{ result: r.key === "result" }}>
+          <dt>{r.label}</dt>
+          <dd set:html={inline(item[r.key])} />
+        </div>
+      ))
+    }
+  </dl>
+</section>
+
+<style>
+  .form {
+    border: 1.5px solid var(--color-ink);
+  }
+  .form > div {
+    display: grid;
+    grid-template-columns: 84px 1fr;
+    border-top: 1px solid var(--color-ink);
+  }
+  .form > div:first-child {
+    border-top: 0;
+  }
+  dt {
+    padding: 12px;
+    border-right: 1px solid var(--color-ink);
+    background: var(--color-paper-2);
+    font-size: 13.5px;
+    font-weight: 600;
+  }
+  .result dt {
+    background: var(--color-lime);
+  }
+  dd {
+    padding: 12px 14px;
+    font-size: 14.5px;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  @media (max-width: 520px) {
+    .form > div {
+      grid-template-columns: 1fr;
+    }
+    dt {
+      border-right: 0;
+      border-bottom: 1px solid var(--color-hair);
+      padding: 8px 12px;
+    }
+  }
+</style>
