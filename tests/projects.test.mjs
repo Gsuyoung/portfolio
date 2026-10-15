@@ -19,3 +19,8 @@ test("letter가 비면 about을 쓴다", () => {
   assert.deepEqual(letterParagraphs({ letter: [], about: ["소개"] }), ["소개"]);
   assert.deepEqual(letterParagraphs({ letter: ["편지"], about: ["소개"] }), ["편지"]);
 });
+
+test("빈 상태 문구", async () => {
+  const { emptyMessage } = await import("../src/lib/project-rules.mjs");
+  assert.equal(emptyMessage, "프로젝트 기록을 준비하고 있습니다.");
+});

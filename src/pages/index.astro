@@ -1,178 +1,230 @@
 ---
 import { existsSync } from "node:fs";
 import { join } from "node:path";
-import { getCollection } from "astro:content";
 import Layout from "../layouts/Layout.astro";
 import Desk from "../components/desk/Desk.astro";
-import SkillTags from "../components/SkillTags.astro";
-import SectionTitle from "../components/SectionTitle.astro";
-import { profile, experience } from "../data/profile";
-import { inline } from "../lib/text";
+import RecordHead from "../components/record/RecordHead.astro";
+import FormRow from "../components/record/FormRow.astro";
+import ProjectFileCard from "../components/record/ProjectFileCard.astro";
+import ContactGrid from "../components/record/ContactGrid.astro";
+import { profile, skills, experience } from "../data/profile";
+import { getPublishedProjects, emptyMessage } from "../lib/projects";
 
-const projects = (await getCollection("projects", ({ data }) => !data.draft)).sort(
-  (a, b) => a.data.order - b.data.order,
-);
+const projects = await getPublishedProjects();
 
-// 외부 링크면 그대로 쓰고, public/ 안의 파일이면 실제로 있을 때만 버튼을 보여줍니다.
+// 외부 링크면 그대로 쓰고, public/ 안의 파일이면 실제로 있을 때만 이력서 칸을 보여줍니다.
 const hasResume =
   !!profile.resume &&
   (/^https?:\/\//.test(profile.resume) || existsSync(join(process.cwd(), "public", profile.resume)));
+
+const contacts = [
+  { label: "E-mail", value: profile.email, href: `mailto:${profile.email}` },
+  { label: "GitHub", value: profile.github.replace("https://", ""), href: profile.github },
+  ...(hasResume ? [{ label: "Resume", value: "이력서 보기", href: profile.resume }] : []),
+];
+
+const tabs = [
+  { href: "#profile", text: "01 PROFILE" },
+  { href: "#projects", text: "02 PROJECTS" },
+  { href: "#contact", text: "03 CONTACT" },
+];
 ---
 
 <Layout>
-  <div class="mx-auto max-w-[1160px] px-4 pt-7">
+  <div class="wrap">
     <Desk />
-  </div>
-  <div class="lg:grid lg:min-h-screen lg:grid-cols-[300px_1fr]">
-    <!-- 사이드바: 데스크톱에서는 화면 왼쪽에 고정, 모바일에서는 상단 프로필 -->
-    <aside class="bg-navy-800 text-[#e6ebf1] lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto">
-      <div class="grid content-start gap-7 px-5 py-8 sm:px-8 lg:py-12">
-        <div class="grid gap-1">
-          {
-            profile.photo ? (
-              <img src={profile.photo} alt={profile.name} class="mb-3 size-16 rounded-full object-cover" />
-            ) : (
-              <div
-                class="mb-3 grid size-16 place-items-center rounded-full bg-navy-600 text-2xl font-semibold text-[#cfe0f5]"
-                aria-hidden="true"
-              >
-                {profile.initial}
-              </div>
-            )
-          }
-          <h1 class="text-2xl font-bold">{profile.name}</h1>
-          <p class="font-mono text-sm text-sky-soft">{profile.role}</p>
-          <p class="mt-2 text-sm text-navy-200">{profile.tagline}</p>
-        </div>
 
-        <div class="flex flex-wrap gap-2 text-[13px]">
-          {
-            hasResume && (
-              <a
-                href={profile.resume}
-                target="_blank"
-                rel="noopener"
-                class="rounded-md bg-sky px-3 py-1.5 font-semibold text-[#102033] hover:brightness-105"
-              >
-                이력서 PDF
-              </a>
-            )
-          }
-          <a
-            href={profile.github}
-            target="_blank"
-            rel="noopener"
-            class:list={[
-              "rounded-md px-3 py-1.5",
-              hasResume
-                ? "border border-navy-600 hover:border-navy-300"
-                : "bg-sky font-semibold text-[#102033] hover:brightness-105",
-            ]}
-          >
-            GitHub
-          </a>
-        </div>
+    <div class="file-wrap">
+      <nav class="tabs" aria-label="서류철 바로가기">
+        {tabs.map((t, i) => <a href={t.href} class:list={{ on: i === 0 }}>{t.text}</a>)}
+      </nav>
 
-        <div class="hidden lg:block">
-          <h2 class="mb-3 text-[11px] tracking-[0.12em] text-navy-300 uppercase">Skills</h2>
-          <SkillTags tone="dark" />
-        </div>
+      <div class="sheet file">
+        <RecordHead />
 
-        <div>
-          <h2 class="mb-2 text-[11px] tracking-[0.12em] text-navy-300 uppercase">Contact</h2>
-          <dl class="grid grid-cols-[3.5rem_1fr] gap-y-1.5 font-mono text-[12.5px] text-[#c7d4e2]">
-            <dt class="text-navy-300">email</dt>
-            <dd class="break-all">
-              <a href={`mailto:${profile.email}`} class="hover:underline">{profile.email}</a>
-            </dd>
-            <dt class="text-navy-300">github</dt>
-            <dd class="break-all">
-              <a href={profile.github} target="_blank" rel="noopener" class="hover:underline">
-                {profile.github.replace("https://", "")}
-              </a>
-            </dd>
-          </dl>
-        </div>
-      </div>
-    </aside>
+        <FormRow no="01" title="소개" label="About" id="profile">
+          <div class="about">{profile.about.map((p) => <p>{p}</p>)}</div>
+        </FormRow>
 
-    <main class="mx-auto grid w-full max-w-3xl content-start gap-12 px-5 py-10 sm:px-10 lg:px-14 lg:py-14">
-      <section>
-        <SectionTitle id="about">About</SectionTitle>
-        <div class="grid max-w-[60ch] gap-2 text-base text-body">
-          {profile.about.map((p) => <p>{p}</p>)}
-        </div>
-      </section>
-
-      <section class="lg:hidden">
-        <SectionTitle id="skills">Skills</SectionTitle>
-        <SkillTags tone="light" />
-      </section>
-
-      <section>
-        <SectionTitle id="experience">Experience</SectionTitle>
-        <ol class="grid gap-6">
-          {
-            experience.map((e) => (
-              <li class="grid gap-x-6 gap-y-1 sm:grid-cols-[8.5rem_1fr]">
-                <span class="pt-0.5 font-mono text-[12.5px] text-muted">{e.period}</span>
+        <FormRow no="02" title="보유 기술" label="Skills" id="skills">
+          <div class="checks">
+            {
+              skills.map((s) => (
                 <div>
-                  <h3 class="font-semibold">{e.title}</h3>
-                  <ul class="mt-1.5 list-disc pl-5 text-[14.5px] text-body">
-                    {e.items.map((i) => (
+                  <h3 class="label">{s.group}</h3>
+                  <ul>
+                    {s.items.map((i) => (
                       <li>{i}</li>
                     ))}
                   </ul>
                 </div>
-              </li>
-            ))
-          }
-        </ol>
-      </section>
+              ))
+            }
+          </div>
+        </FormRow>
 
-      <section>
-        <SectionTitle id="projects">Projects</SectionTitle>
-        {
-          projects.length === 0 && (
-            <p class="rounded-xl border border-dashed border-line px-5 py-8 text-center text-[14.5px] text-muted">
-              프로젝트 소개를 준비하고 있습니다.
-            </p>
-          )
-        }
-        <ul class="grid gap-3.5">
+        <FormRow no="03" title="경력" label="Experience" id="experience">
+          <div class="ledger-wrap">
+            <table class="ledger">
+              <thead><tr><th>기간</th><th>소속 · 직무</th><th>주요 업무</th></tr></thead>
+              <tbody>
+                {
+                  experience.map((e) => (
+                    <tr>
+                      <td class="mono">{e.period}</td>
+                      <td><b>{e.title}</b></td>
+                      <td>{e.items.join(", ")}</td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </table>
+          </div>
+        </FormRow>
+
+        <FormRow no="04" title="프로젝트" label="Projects" id="projects">
           {
-            projects.map((p) => (
-              <li>
-                <a
-                  href={`/projects/${p.id}/`}
-                  class="group grid gap-2 rounded-xl border border-line px-5 py-5 transition-colors hover:border-[#b9cde4] hover:bg-[#fafcfe] sm:px-6"
-                >
-                  <div class="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
-                    <h3 class="text-[17px] font-semibold">{p.data.title}</h3>
-                    <span class="font-mono text-[12.5px] text-muted">
-                      {p.data.team ? `${p.data.period} · ${p.data.team}` : p.data.period}
-                    </span>
-                  </div>
-                  <p class="text-[14.5px] text-body">{p.data.summary}</p>
-                  {p.data.highlight && <p class="text-sm" set:html={inline(p.data.highlight)} />}
-                  <div class="mt-1 flex flex-wrap items-center justify-between gap-2">
-                    <ul class="flex flex-wrap gap-1.5">
-                      {p.data.stack.map((s) => (
-                        <li class="rounded bg-accent-soft px-2 py-0.5 font-mono text-xs text-[#1f5fae]">{s}</li>
-                      ))}
-                    </ul>
-                    <span class="text-[13.5px] font-semibold text-accent group-hover:underline">자세히 보기 →</span>
-                  </div>
-                </a>
-              </li>
-            ))
+            projects.length === 0 ? (
+              <p class="empty">{emptyMessage}</p>
+            ) : (
+              <div class="cards">
+                {projects.map((p) => (
+                  <ProjectFileCard project={p} />
+                ))}
+              </div>
+            )
           }
-        </ul>
-      </section>
+        </FormRow>
 
-      <footer class="border-t border-line pt-6 text-xs text-muted">
-        © {new Date().getFullYear()} {profile.name}
-      </footer>
-    </main>
+        <FormRow no="05" title="연락처" label="Contact" id="contact">
+          <ContactGrid items={contacts} />
+        </FormRow>
+      </div>
+    </div>
+
+    <footer class="foot">
+      <span>© {new Date().getFullYear()} {profile.name}</span>
+      <span>{profile.docNo}</span>
+    </footer>
   </div>
 </Layout>
+
+<style>
+  .wrap {
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 28px max(16px, env(safe-area-inset-right, 0px)) 64px max(16px, env(safe-area-inset-left, 0px));
+  }
+  .file-wrap {
+    position: relative;
+    margin-top: 72px;
+  }
+  .tabs {
+    position: absolute;
+    left: 20px;
+    bottom: 100%;
+    display: flex;
+    gap: 4px;
+  }
+  .tabs a {
+    padding: 6px 14px 4px;
+    border-radius: 6px 6px 0 0;
+    background: var(--color-paper-2);
+    color: var(--color-ink-soft);
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+  .tabs a.on,
+  .tabs a:hover {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+  .about p {
+    max-width: 62ch;
+    font-size: 16px;
+  }
+  .about p + p {
+    margin-top: 8px;
+    color: var(--color-ink-soft);
+    font-size: 15px;
+  }
+  .checks {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 16px 28px;
+  }
+  .checks h3 {
+    margin-bottom: 6px;
+  }
+  .checks ul {
+    display: grid;
+    gap: 3px;
+    font-size: 14.5px;
+  }
+  .checks li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .checks li::before {
+    content: "✓";
+    display: grid;
+    place-items: center;
+    width: 15px;
+    height: 15px;
+    border: 1.5px solid var(--color-ink);
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .ledger-wrap {
+    overflow-x: auto;
+  }
+  .ledger {
+    width: 100%;
+    min-width: 480px;
+    border-collapse: collapse;
+    font-size: 14.5px;
+  }
+  .ledger th {
+    padding: 0 12px 8px 0;
+    border-bottom: 1.5px solid var(--color-ink);
+    color: var(--color-ink-soft);
+    font-weight: 500;
+    text-align: left;
+  }
+  .ledger td {
+    padding: 12px 12px 12px 0;
+    border-bottom: 1px solid var(--color-hair);
+    vertical-align: top;
+  }
+  .ledger td.mono {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    white-space: nowrap;
+  }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 18px;
+  }
+  .empty {
+    padding: 28px 16px;
+    border: 1.5px dashed var(--color-ink-soft);
+    color: var(--color-ink-soft);
+    text-align: center;
+  }
+  .foot {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 20px;
+    color: #9a968e;
+    font-family: var(--font-mono);
+    font-size: 12px;
+  }
+</style>

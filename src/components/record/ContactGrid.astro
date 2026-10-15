@@ -1,0 +1,52 @@
+---
+interface Props {
+  items: { label: string; value: string; href?: string }[];
+}
+const { items } = Astro.props;
+---
+
+<dl class="grid">
+  {
+    items.map((it) => (
+      <div>
+        <dt class="label">{it.label}</dt>
+        <dd>{it.href ? <a href={it.href} target={it.href.startsWith("http") || it.href.endsWith(".pdf") ? "_blank" : undefined} rel="noopener">{it.value}</a> : it.value}</dd>
+      </div>
+    ))
+  }
+</dl>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    border: 1px solid var(--color-ink);
+  }
+  .grid > div {
+    padding: 12px 14px;
+    border-right: 1px solid var(--color-ink);
+    min-width: 0;
+  }
+  .grid > div:last-child {
+    border-right: 0;
+  }
+  dd {
+    margin-top: 2px;
+    font-family: var(--font-mono);
+    font-size: 13.5px;
+    overflow-wrap: anywhere;
+  }
+  a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  @media (max-width: 520px) {
+    .grid > div {
+      border-right: 0;
+      border-bottom: 1px solid var(--color-ink);
+    }
+    .grid > div:last-child {
+      border-bottom: 0;
+    }
+  }
+</style>

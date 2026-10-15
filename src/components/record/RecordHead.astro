@@ -1,0 +1,52 @@
+---
+import { profile } from "../../data/profile";
+
+const cells = [
+  { label: "Name", value: `${profile.name} / ${profile.nameEn}` },
+  { label: "Position", value: profile.role },
+  { label: "Doc No.", value: profile.docNo },
+];
+---
+
+<div class="head">
+  <div><div class="label">Document</div><h2 class="title">개발자 이력 기록부</h2></div>
+  {cells.map((c) => <div><div class="label">{c.label}</div><div class="v">{c.value}</div></div>)}
+</div>
+
+<style>
+  .head {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    border-bottom: 2px solid var(--color-ink);
+  }
+  .head > div {
+    padding: 14px 18px;
+    border-right: 1px solid var(--color-ink);
+    min-width: 0;
+  }
+  .head > div:last-child {
+    border-right: 0;
+  }
+  .title {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .v {
+    margin-top: 2px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    overflow-wrap: anywhere;
+  }
+  @media (max-width: 900px) {
+    .head {
+      grid-template-columns: 1fr 1fr;
+    }
+    .head > div:nth-child(2n) {
+      border-right: 0;
+    }
+    .head > div:nth-child(-n + 2) {
+      border-bottom: 1px solid var(--color-ink);
+    }
+  }
+</style>

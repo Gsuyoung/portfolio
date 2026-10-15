@@ -12,3 +12,6 @@ export function numberProjects(entries) {
 export function letterParagraphs(profile) {
   return profile.letter?.length ? profile.letter : profile.about;
 }
+
+/** 공개 프로젝트가 하나도 없을 때 §04 에 보여줄 문구 */
+export const emptyMessage = "프로젝트 기록을 준비하고 있습니다.";
