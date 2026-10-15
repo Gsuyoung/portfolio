@@ -1,0 +1,44 @@
+---
+import { Image } from "astro:assets";
+import beadCharm from "../../assets/bead-charm.png";
+---
+
+<div class="charm" aria-hidden="true">
+  <div class="crop"><Image src={beadCharm} alt="" width={240} height={240} /></div>
+</div>
+
+<style>
+  /* GSY 태그 옆에 붙인 작은 비즈 캐릭터 스티커 카드 */
+  .charm {
+    position: absolute;
+    right: 7%;
+    top: 575px;
+    z-index: 4;
+    width: 104px;
+    padding: 6px;
+    background: #f7f5f0;
+    border: 1px solid #ddd8cd;
+    box-shadow: 0 16px 30px -14px rgb(0 0 0 / 0.8);
+    transform: rotate(9deg);
+  }
+  /* 원본 여백이 넓어서 캐릭터 부분만 확대해 보여줍니다. */
+  .crop {
+    overflow: hidden;
+    aspect-ratio: 1;
+  }
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    transform: scale(1.2);
+    transform-origin: 50% 50%;
+  }
+  @media (max-width: 900px) {
+    .charm {
+      right: 14px;
+      top: auto;
+      bottom: 14px;
+      width: 84px;
+    }
+  }
+</style>

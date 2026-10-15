@@ -45,3 +45,12 @@ test("예전 네이비 사이드바는 사라졌다", async () => {
   const html = await readDist("index.html");
   assert.doesNotMatch(html, /navy-/);
 });
+
+test("첫 화면: GSY 태그 옆 비즈 캐릭터 스티커(장식, 최적화 이미지)", async () => {
+  const html = await readDist("index.html");
+  const charm = html.match(/<div class="charm"[\s\S]*?<\/div>/);
+  assert.ok(charm, "charm 카드가 있어야 함");
+  assert.match(charm[0], /<img[^>]*src="\/_astro\/bead-charm\.[^"]+\.webp"/);
+  assert.match(charm[0], /\salt(="")?[\s>]/);
+  assert.match(charm[0], /aria-hidden="true"/);
+});
