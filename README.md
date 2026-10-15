@@ -35,9 +35,17 @@ src/
 ├─ content/projects/        프로젝트 Markdown
 ├─ content.config.ts        프로젝트 항목 형식 정의
 ├─ layouts/Layout.astro     공통 <head>
-├─ components/              기술 태그, 섹션 제목
-├─ pages/index.astro        메인 (사이드바 + 소개/경력/프로젝트)
-└─ pages/projects/[slug].astro  프로젝트 상세
+├─ lib/                     프로젝트 정렬·번호 규칙, 문장 강조
+├─ components/desk/         첫 화면 책상 콜라주
+├─ components/record/       개발자 이력 기록부 양식
+├─ components/spec/         기술 명세서 머리·트러블슈팅 양식
+├─ components/DotText.astro 도트 매트릭스 글자
+├─ pages/index.astro        메인 (콜라주 + 이력 기록부)
+├─ pages/projects/[slug].astro  프로젝트 상세 (기술 명세서)
+└─ pages/404.astro          찾을 수 없는 문서
+
+docs/project-notes/         사이트에 나가지 않는 프로젝트 확인 메모
+tests/                      npm test (node:test)
 ```
 
 ## 배포
