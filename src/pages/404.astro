@@ -1,0 +1,29 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="문서를 찾을 수 없습니다">
+  <main class="grid min-h-screen place-items-center px-4 py-16">
+    <article class="sheet torn w-full max-w-md -rotate-2 px-7 pt-7 pb-14">
+      <div class="flex justify-between border-b-[1.5px] border-ink pb-2">
+        <span class="label">Error Report</span>
+        <span class="label">No. 404</span>
+      </div>
+      <h1 class="mt-6 text-xl font-bold text-balance">요청하신 문서를 찾을 수 없습니다</h1>
+      <p class="mt-2 text-sm text-ink-soft">주소가 바뀌었거나 서류철에서 빠진 문서입니다.</p>
+      <a href="/" class="mt-6 inline-block font-mono text-sm font-semibold text-ink underline underline-offset-4">
+        ← 서류철로 돌아가기
+      </a>
+    </article>
+  </main>
+</Layout>
+
+<style>
+  /* 아래쪽을 톱니 모양으로 잘라 찢어진 종이처럼 보이게 합니다. */
+  .torn {
+    clip-path: polygon(
+      0 0, 100% 0, 100% 92%, 95% 97%, 90% 93%, 84% 98%, 78% 94%, 71% 99%, 65% 94%, 58% 98%,
+      52% 93%, 45% 97%, 38% 92%, 31% 98%, 25% 94%, 18% 99%, 12% 94%, 6% 98%, 0 93%
+    );
+  }
+</style>

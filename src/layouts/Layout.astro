@@ -9,7 +9,7 @@ interface Props {
 
 const {
   title = `${profile.name} | ${profile.role}`,
-  description = `${profile.role} ${profile.name}의 포트폴리오. ${profile.tagline}`,
+  description = `${profile.role} ${profile.name}의 포트폴리오`,
 } = Astro.props;
 ---
 
@@ -27,11 +27,11 @@ const {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
   </head>
-  <body class="min-h-screen bg-white text-[15px] leading-relaxed">
+  <body class="min-h-screen bg-desk text-[15px] leading-relaxed text-paper">
     <slot />
   </body>
 </html>
