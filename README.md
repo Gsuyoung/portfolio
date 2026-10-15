@@ -39,3 +39,10 @@ src/
 ├─ pages/index.astro        메인 (사이드바 + 소개/경력/프로젝트)
 └─ pages/projects/[slug].astro  프로젝트 상세
 ```
+
+## 배포
+
+- `feature/initial-setting` 등 작업 브랜치에 push하면 Vercel 미리보기가, `main` 에 병합하면 정식 주소가 배포됩니다.
+- 공개 전 점검: `npm run check:content` (공개 대상에 TODO가 없어야 함), `npm run build && npm test`
+- 링크 미리보기 이미지(`public/og.png`)는 `scripts/og-template.html` 을 1200×630 으로 캡처해 만듭니다.
+  예: `msedge --headless=new --window-size=1200,630 --virtual-time-budget=8000 --screenshot=public/og.png scripts/og-template.html`
