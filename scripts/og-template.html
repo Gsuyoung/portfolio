@@ -30,7 +30,7 @@
 </head>
 <body>
   <div class="cover">
-    <div class="label"><span>Portfolio · Vol.01</span><span>2026</span></div>
+    <div class="label"><span>Vol.01</span><span>2026</span></div>
     <canvas id="c" width="1080" height="560"></canvas>
     <div class="role">BACKEND DEVELOPER</div>
   </div>
@@ -40,9 +40,11 @@
     document.fonts.ready.then(() => {
       const c = document.getElementById("c"), w = c.width, h = c.height, ctx = c.getContext("2d");
       const o = document.createElement("canvas"); o.width = w; o.height = h;
-      const x = o.getContext("2d"); const size = Math.min(h * 0.8, (w / 3) * 0.92);
-      x.font = `700 ${size}px "IBM Plex Sans KR"`; x.textBaseline = "middle"; x.fillText("구수영", 0, h / 2);
-      const d = x.getImageData(0, 0, w, h).data, step = Math.round(size / 26);
+      const x = o.getContext("2d"); const lines = ["SUYOUNG'S", "PORTFOLIO"];
+      let size = h * 0.42; x.font = `700 ${size}px "IBM Plex Sans KR"`;
+      const widest = Math.max(...lines.map((l) => x.measureText(l).width)); if (widest > w) { size *= w / widest; x.font = `700 ${size}px "IBM Plex Sans KR"`; }
+      x.textBaseline = "middle"; lines.forEach((l, i) => x.fillText(l, 0, h / 2 + (i - 0.5) * size * 1.05));
+      const d = x.getImageData(0, 0, w, h).data, step = Math.round(size / 22);
       ctx.fillStyle = "#3b2c18";
       for (let y = step / 2; y < h; y += step) for (let i = step / 2; i < w; i += step)
         if (d[((y | 0) * w + (i | 0)) * 4 + 3] > 110) { ctx.beginPath(); ctx.arc(i, y, step * .34, 0, 7); ctx.fill(); }

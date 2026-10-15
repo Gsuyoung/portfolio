@@ -3,6 +3,8 @@ import DotText from "../DotText.astro";
 import { profile, skills } from "../../data/profile";
 
 const year = new Date().getFullYear();
+// "Suyoung's Portfolio" → 두 줄 "SUYOUNG'S" / "PORTFOLIO"
+const dotTitle = profile.siteTitle.toUpperCase().split(" ").join("\n");
 // 그룹마다 대표 기술 하나씩
 const headline = skills.map((s) => s.items[0]).join(" · ");
 // 바코드 막대 폭(px). 짝수 번째만 칠합니다.
@@ -10,8 +12,8 @@ const bars = [2, 1, 1, 3, 1, 2, 1, 1, 2, 3, 1, 1, 2, 1, 3, 1, 2, 1, 1, 2, 1, 3, 
 ---
 
 <div class="sheet cover">
-  <div class="top label"><span>Portfolio · Vol.01</span><span>{year}</span></div>
-  <DotText text={profile.name} color="#3b2c18" font="sans" density={26} class="name" />
+  <div class="top label"><span>Vol.01</span><span>{year}</span></div>
+  <DotText text={dotTitle} label={profile.siteTitle} color="#3b2c18" font="sans" density={16} class="name" />
   <div class="bottom">
     <div>
       <div class="role">{profile.role.toUpperCase()}</div>

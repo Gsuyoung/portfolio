@@ -2,11 +2,18 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readDist } from "./helpers.mjs";
 
-test("첫 화면: 도트 이름은 캔버스 + 읽히는 대체 텍스트", async () => {
+test("첫 화면: 사이트 제목은 두 줄 도트 캔버스 + 읽히는 대체 텍스트", async () => {
   const html = await readDist("index.html");
-  assert.match(html, /<canvas[^>]*aria-hidden="true"[^>]*data-dot-text="구수영"/);
-  assert.match(html, /class="sr-only"[^>]*>구수영</);
-  assert.match(html, /<noscript>[\s\S]*구수영[\s\S]*<\/noscript>/);
+  assert.match(html, /<canvas[^>]*aria-hidden="true"[^>]*data-dot-text="SUYOUNG(&#39;|')S\nPORTFOLIO"/);
+  assert.match(html, /class="sr-only"[^>]*>Suyoung(&#39;|')s Portfolio</);
+  assert.match(html, /<noscript>[\s\S]*Suyoung(&#39;|')s Portfolio[\s\S]*<\/noscript>/);
+});
+
+test("브라우저 탭 제목은 Suyoung's Portfolio", async () => {
+  const html = await readDist("index.html");
+  assert.match(html, /<title>Suyoung(&#39;|')s Portfolio · Backend Developer<\/title>/);
+  const spec = await readDist("projects/ca2sa/index.html");
+  assert.match(spec, /<title>CA2SA \| Suyoung(&#39;|')s Portfolio<\/title>/);
 });
 
 test("서신: 영문 이름, HIRING TEAM, 서명", async () => {

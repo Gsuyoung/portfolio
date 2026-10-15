@@ -21,8 +21,13 @@ import Sticker from "./Sticker.astro";
   }
   .desk :global(.cover .name) {
     height: 100%;
+    /* 데스크톱에서는 오른쪽이 서신에 가려지므로 왼쪽에만 찍습니다. */
+    width: 78%;
   }
   @media (max-width: 900px) {
+    .desk :global(.cover .name) {
+      width: 100%;
+    }
     .desk {
       height: auto;
       display: grid;

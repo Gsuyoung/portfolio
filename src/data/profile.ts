@@ -1,6 +1,8 @@
 // 사이트 전체에서 쓰는 기본 정보. 노션 내용이 정리되면 여기를 채우세요.
 export const profile = {
   name: "구수영",
+  // 표지·브라우저 탭·링크 미리보기에 쓰는 사이트 이름
+  siteTitle: "Suyoung's Portfolio",
   nameEn: "GU SUYOUNG",
   // 서명 칸에 고정폭 이탤릭으로 표시됩니다.
   nameSign: "Suyoung Gu",

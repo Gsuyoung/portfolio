@@ -1,8 +1,9 @@
 ---
-// 글자를 점(도트 매트릭스)으로 찍어 보여줍니다.
-// 캔버스는 장식이라 스크린리더에서 숨기고, 실제 글자는 sr-only 와 noscript 로 함께 둡니다.
+// 글자를 점(도트 매트릭스)으로 찍어 보여줍니다. text 의 "\n" 은 줄바꿈입니다.
+// 캔버스는 장식이라 스크린리더에서 숨기고, 실제 글자(label, 없으면 text)는 sr-only 와 noscript 로 함께 둡니다.
 interface Props {
   text: string;
+  label?: string;
   color: string;
   font: "sans" | "mono";
   density: number;
@@ -10,7 +11,7 @@ interface Props {
   class?: string;
 }
 
-const { text, color, font, density, align = "left", class: className } = Astro.props;
+const { text, label = text, color, font, density, align = "left", class: className } = Astro.props;
 ---
 
 <span class:list={["dot-text", className]}>
@@ -21,8 +22,8 @@ const { text, color, font, density, align = "left", class: className } = Astro.p
     data-font={font}
     data-density={density}
     data-align={align}></canvas>
-  <span class="sr-only">{text}</span>
-  <noscript><span class="dot-text-fallback" style={`color:${color}`}>{text}</span></noscript>
+  <span class="sr-only">{label}</span>
+  <noscript><span class="dot-text-fallback" style={`color:${color}`}>{label}</span></noscript>
 </span>
 
 <style>
@@ -65,26 +66,36 @@ const { text, color, font, density, align = "left", class: className } = Astro.p
 
 <script>
   const FONTS = {
-    sans: { family: '"IBM Plex Sans KR", sans-serif', fit: 1.0 },
-    mono: { family: '"IBM Plex Mono", monospace', fit: 1.6 },
+    sans: { family: '"IBM Plex Sans KR", sans-serif', fit: 0.98 },
+    mono: { family: '"IBM Plex Mono", monospace', fit: 0.9 },
   } as const;
 
   type Dot = { x: number; y: number; r: number };
 
   // 보이지 않는 캔버스에 글자를 그린 뒤 격자 단위로 샘플링해 점 좌표를 얻습니다.
   function sampleDots(canvas: HTMLCanvasElement, w: number, h: number): Dot[] {
-    const text = canvas.dataset.dotText ?? "";
+    const lines = (canvas.dataset.dotText ?? "").split("\n");
     const font = FONTS[(canvas.dataset.font as keyof typeof FONTS) ?? "sans"];
     const density = Number(canvas.dataset.density);
     const off = document.createElement("canvas");
     off.width = w;
     off.height = h;
     const o = off.getContext("2d", { willReadFrequently: true })!;
-    const size = Math.min(h * 0.86, (w / text.length) * font.fit);
+    // 높이에 맞춘 크기로 시작해, 실제로 잰 글자 폭이 넘치면 그만큼 줄입니다.
+    let size = (h / lines.length) * 0.86;
     o.font = `700 ${size}px ${font.family}`;
+    const widest = Math.max(...lines.map((l) => o.measureText(l).width));
+    if (widest > w * font.fit) {
+      size *= (w * font.fit) / widest;
+      o.font = `700 ${size}px ${font.family}`;
+    }
     o.textBaseline = "middle";
-    const x0 = canvas.dataset.align === "center" ? (w - o.measureText(text).width) / 2 : 0;
-    o.fillText(text, x0, h / 2);
+    const lh = size * 1.05;
+    const top = h / 2 - ((lines.length - 1) * lh) / 2;
+    lines.forEach((line, i) => {
+      const x0 = canvas.dataset.align === "center" ? (w - o.measureText(line).width) / 2 : 0;
+      o.fillText(line, x0, top + i * lh);
+    });
     const data = o.getImageData(0, 0, w, h).data;
     const step = Math.max(3, Math.round(size / density));
     const dots: Dot[] = [];
