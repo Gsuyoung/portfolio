@@ -44,6 +44,7 @@ export const experience: { period: string; title: string; items: string[] }[] = 
       "Spring Boot · JPA 기반 REST API 개발",
       "Redis 세션 기반 관리자 인증 개선",
       "Spring Security 필터 설계 (JWT · 외부 API 키 인증 분기, 역할별 권한)",
+      "외부 API 키를 SHA-256 해시로 저장해 키만으로 이용자 식별",
       "외부 실행 파일과 연동하는 결제 모듈 개발",
       "프론트엔드와 API 명세 · 요청 · 응답 구조 조율",
       "Nginx 설정을 포함한 서버 배포 · 로그 확인",
