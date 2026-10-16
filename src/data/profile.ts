@@ -11,8 +11,8 @@ export const profile = {
   docNo: "GSY-2026-001",
   // 이력 기록부 §01 소개. 문단마다 한 줄씩.
   about: [
-    "기능 구현을 넘어 데이터 정합성, 서비스 안정성, 유지보수성까지 함께 고민하는 백엔드 개발자입니다.",
-    "Spring Boot · JPA · MariaDB 기반의 REST API 개발과 Redis 세션 인증을 주로 다뤄 왔습니다.",
+    "기능 너머 데이터 정합성과 서비스 안정성까지 고민하는 백엔드 개발자입니다.",
+    "Spring Boot · JPA 기반 REST API 개발과 인증 · 권한 처리를 주로 다룹니다.",
   ],
   // 첫 화면 서신에 쓰는 문단. 비워 두면 about 을 그대로 씁니다.
   letter: [
@@ -32,7 +32,8 @@ export const skills: { group: string; items: string[] }[] = [
   { group: "Framework", items: ["Spring Boot", "Spring Data JPA", "Spring Security", "MyBatis"] },
   { group: "Data", items: ["MariaDB", "MySQL", "Redis"] },
   { group: "API", items: ["REST API", "Swagger UI", "Postman"] },
-  { group: "Tool", items: ["Git · GitHub", "Docker", "IntelliJ IDEA", "DBeaver", "Termius"] },
+  { group: "Collaboration", items: ["Git · GitHub", "Bitbucket", "Jira"] },
+  { group: "Tool", items: ["Docker", "IntelliJ IDEA", "DBeaver", "Termius"] },
 ];
 
 // 경력. 최신순.
@@ -42,9 +43,7 @@ export const experience: { period: string; title: string; items: string[] }[] = 
     title: "코코에이치 · 백엔드 개발",
     items: [
       "Spring Boot · JPA 기반 REST API 개발",
-      "Redis 세션 기반 관리자 인증 개선",
-      "Spring Security 필터 설계 (JWT · 외부 API 키 인증 분기, 역할별 권한)",
-      "외부 API 키를 SHA-256 해시로 저장해 키만으로 이용자 식별",
+      "관리자 · 외부 이용자 인증 · 권한 처리 (Spring Security, Redis 세션)",
       "외부 실행 파일과 연동하는 결제 모듈 개발",
       "프론트엔드와 API 명세 · 요청 · 응답 구조 조율",
       "Nginx 설정을 포함한 서버 배포 · 로그 확인",
