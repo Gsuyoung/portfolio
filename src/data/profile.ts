@@ -33,7 +33,8 @@ export const skills: { group: string; items: string[] }[] = [
   { group: "Data", items: ["MariaDB", "MySQL", "Redis"] },
   { group: "API", items: ["REST API", "Swagger UI", "Postman"] },
   { group: "Collaboration", items: ["Git · GitHub", "Bitbucket", "Jira"] },
-  { group: "Tool", items: ["Docker", "IntelliJ IDEA", "DBeaver", "Termius"] },
+  { group: "Infra", items: ["Docker", "NCP Object Storage", "NCP Global Edge"] },
+  { group: "Tool", items: ["IntelliJ IDEA", "DBeaver", "Termius"] },
 ];
 
 // 경력. 최신순.
@@ -44,8 +45,9 @@ export const experience: { period: string; title: string; items: string[] }[] = 
     items: [
       "Spring Boot · JPA 기반 REST API 개발",
       "관리자 · 외부 이용자 인증 · 권한 처리 (Spring Security, Redis 세션)",
-      "외부 실행 파일과 연동하는 결제 모듈 개발",
+      "AI 도구를 활용해 외부 실행 파일과 연동하는 결제 모듈 개발",
       "프론트엔드와 API 명세 · 요청 · 응답 구조 조율",
+      "Naver Cloud Object Storage 파일 관리, 비용 문제로 Global Edge CDN 적용",
       "Nginx 설정을 포함한 서버 배포 · 로그 확인",
     ],
   },
