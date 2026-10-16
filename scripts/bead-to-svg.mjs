@@ -7,7 +7,7 @@ const SRC = "src/assets/bead-charm.png";
 const OUT = "src/assets/bead-charm.svg";
 const BG = [247, 246, 242]; // 원본 배경색
 const PITCH = 14; // 구슬 간격(px)
-const MARGIN = 3; // 그림 둘레에 남길 빈 구슬 칸 수
+const MARGIN = 0; // 종이 없이 모양만 쓰므로 둘레 여백 없음
 
 const { data, info } = await sharp(SRC).removeAlpha().raw().toBuffer({ resolveWithObject: true });
 const W = info.width;
@@ -67,13 +67,27 @@ for (let j = 0; j < rows; j++) {
     // 배경과 비슷한 색은 배경보다 더 밝고(흰 구슬) 고리 무늬가 있을 때만 구슬로 칩니다.
     const white = Math.min(...c) >= 249 && hasRing(cx, cy);
     if (isBg(c) && !white) continue;
-    const stroke = white ? ` stroke="#c9c5bc" stroke-width="0.08"` : "";
-    dots.push(`<circle cx="${i + MARGIN + 0.5}" cy="${j + MARGIN + 0.5}" r="0.42" fill="${hex(c)}"${stroke}/>`);
+    const x = i + MARGIN + 0.5;
+    const y = j + MARGIN + 0.5;
+    const stroke = white ? ` stroke="#c9c5bc" stroke-width="0.06"` : "";
+    // 구슬 색 위에 공통 입체 효과(#b: 음영·빛 반사·구멍)를 겹칩니다.
+    dots.push(`<circle cx="${x}" cy="${y}" r="0.44" fill="${hex(c)}"${stroke}/><use href="#b" x="${x}" y="${y}"/>`);
   }
 }
 
 const vw = cols + MARGIN * 2;
 const vh = rows + MARGIN * 2;
-const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${vw} ${vh}" width="${vw * 6}" height="${vh * 6}">${dots.join("")}</svg>\n`;
+// 퓨즈 비즈 한 알의 입체 효과: 가장자리는 어둡게, 왼쪽 위에 빛 반사, 가운데에 구멍.
+const defs = [
+  `<radialGradient id="s" cx="0.38" cy="0.32" r="0.7">`,
+  `<stop offset="0.55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity="0.38"/>`,
+  `</radialGradient>`,
+  `<g id="b">`,
+  `<circle r="0.44" fill="url(#s)"/>`,
+  `<ellipse cx="-0.15" cy="-0.19" rx="0.15" ry="0.09" transform="rotate(-30 -0.15 -0.19)" fill="#fff" fill-opacity="0.55"/>`,
+  `<circle r="0.11" fill="#000" fill-opacity="0.28"/>`,
+  `</g>`,
+].join("");
+const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${vw} ${vh}" width="${vw * 6}" height="${vh * 6}"><defs>${defs}</defs>${dots.join("")}</svg>\n`;
 await writeFile(OUT, svg);
 console.log(`${cols}x${rows} 구슬, 점 ${dots.length}개 → ${OUT}`);

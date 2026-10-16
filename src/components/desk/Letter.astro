@@ -1,6 +1,7 @@
 ---
 import { profile } from "../../data/profile";
 import { letterParagraphs } from "../../lib/projects";
+import Charm from "./Charm.astro";
 
 const today = new Intl.DateTimeFormat("ko-KR", {
   timeZone: "Asia/Seoul",
@@ -24,7 +25,7 @@ const github = profile.github.replace("https://", "");
   </div>
   <div class="foot">
     <div><div class="label">Date</div><div class="date">{today}</div></div>
-    <div><div class="label">Signature</div><div class="sign">{profile.nameSign}</div></div>
+    <div class="sig"><div class="label">Signature</div><div class="sign">{profile.nameSign}</div><Charm /></div>
   </div>
 </article>
 
@@ -88,11 +89,21 @@ const github = profile.github.replace("https://", "");
     font-family: var(--font-mono);
     font-size: 13px;
   }
+  /* 비즈 캐릭터가 이 칸 위쪽 선에 걸쳐 섭니다. */
+  .sig {
+    position: relative;
+  }
   .sign {
     font-family: var(--font-mono);
     font-style: italic;
     font-size: 20px;
     margin-top: 4px;
+  }
+  /* 중간 폭에서는 본문이 서명 칸 바로 위까지 오므로 캐릭터 자리를 비워 둡니다. */
+  @media (min-width: 521px) and (max-width: 900px) {
+    .body {
+      padding-bottom: 96px;
+    }
   }
   @media (max-width: 900px) {
     .letter {
