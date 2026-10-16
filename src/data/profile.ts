@@ -31,8 +31,8 @@ export const skills: { group: string; items: string[] }[] = [
   { group: "Language", items: ["Java", "SQL"] },
   { group: "Framework", items: ["Spring Boot", "Spring Data JPA", "MyBatis"] },
   { group: "Data", items: ["MariaDB", "MySQL", "Redis"] },
-  { group: "API · Auth", items: ["REST API", "OAuth", "Swagger UI"] },
-  { group: "Tool", items: ["Docker", "Git · GitHub", "Postman", "IntelliJ IDEA"] },
+  { group: "API", items: ["REST API", "Swagger UI", "Postman"] },
+  { group: "Tool", items: ["Git · GitHub", "Docker", "IntelliJ IDEA", "DBeaver", "Termius"] },
 ];
 
 // 경력. 최신순.
