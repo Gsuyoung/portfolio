@@ -64,3 +64,9 @@ test("비즈 캐릭터는 종이 없이 입체 구슬로, 서신의 서명 칸 �
   assert.ok((charm.match(/<use/g) ?? []).length > 400, "구슬마다 하이라이트·구멍(입체) 겹침");
   assert.doesNotMatch(charm, /class="(paper|tape)"/);
 });
+
+test("경력에 자격증 표가 붙어 있고 TODO 는 없다", async () => {
+  const html = await readDist("index.html");
+  for (const t of ["정보처리기사", "SQL 개발자 (SQLD)", "코코에이치"]) assert.ok(html.includes(t), t);
+  assert.doesNotMatch(html, /\bTODO\b/);
+});

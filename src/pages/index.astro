@@ -7,7 +7,7 @@ import RecordHead from "../components/record/RecordHead.astro";
 import FormRow from "../components/record/FormRow.astro";
 import ProjectFileCard from "../components/record/ProjectFileCard.astro";
 import ContactGrid from "../components/record/ContactGrid.astro";
-import { profile, skills, experience } from "../data/profile";
+import { profile, skills, experience, certificates } from "../data/profile";
 import { getPublishedProjects, emptyMessage } from "../lib/projects";
 
 const projects = await getPublishedProjects();
@@ -73,7 +73,30 @@ const tabs = [
                     <tr>
                       <td class="mono">{e.period}</td>
                       <td><b>{e.title}</b></td>
-                      <td>{e.items.join(", ")}</td>
+                      <td>
+                        <ul class="duties">
+                          {e.items.map((i) => (
+                            <li>{i}</li>
+                          ))}
+                        </ul>
+                      </td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </table>
+          </div>
+          <h3 class="label sub">Certificates</h3>
+          <div class="ledger-wrap">
+            <table class="ledger">
+              <thead><tr><th>취득</th><th>자격</th><th>발급 기관</th></tr></thead>
+              <tbody>
+                {
+                  certificates.map((c) => (
+                    <tr>
+                      <td class="mono">{c.date}</td>
+                      <td><b>{c.name}</b></td>
+                      <td>{c.issuer}</td>
                     </tr>
                   ))
                 }
@@ -205,6 +228,17 @@ const tabs = [
     font-family: var(--font-mono);
     font-size: 13px;
     white-space: nowrap;
+  }
+  .duties {
+    display: grid;
+    gap: 3px;
+  }
+  .duties li::before {
+    content: "– ";
+    color: var(--color-ink-soft);
+  }
+  .sub {
+    margin: 28px 0 8px;
   }
   .cards {
     display: grid;

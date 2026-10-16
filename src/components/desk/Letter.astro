@@ -99,8 +99,11 @@ const github = profile.github.replace("https://", "");
     font-size: 20px;
     margin-top: 4px;
   }
-  /* 중간 폭에서는 본문이 서명 칸 바로 위까지 오므로 캐릭터 자리를 비워 둡니다. */
-  @media (min-width: 521px) and (max-width: 900px) {
+  /* 본문이 서명 칸 바로 위까지 오므로 캐릭터가 설 자리를 비워 둡니다. */
+  .body {
+    padding-bottom: 120px;
+  }
+  @media (max-width: 900px) {
     .body {
       padding-bottom: 96px;
     }
