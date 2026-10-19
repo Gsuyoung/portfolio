@@ -6,7 +6,7 @@ role: "백엔드 개발 · 출석·성적·수강 관리, 엑셀 처리 및 리�
 stack: ["Java 17", "Spring Boot 3.4", "Spring Security", "JPA", "MyBatis", "MariaDB", "Apache POI"]
 highlight: "출석부 CRUD, 성적 관리 및 엑셀 입출력, 수강생 조회·리뷰 관련 API 구현 및 개선"
 repo: "https://github.com/Gsuyoung/studyBridge"
-order: 1
+order: 2
 draft: false
 troubleshooting: []
 lesson: "팀 프로젝트에서 학습·수강 데이터를 다루는 API와 엑셀 파일 입출력을 개발하고, 기능 간 데이터 흐름 및 연동 방식을 경험했습니다."
