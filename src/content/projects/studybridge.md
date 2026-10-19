@@ -90,12 +90,13 @@ Spring Boot
 
 - 공지사항 등록 · 관리와 사이트 팝업 관리 API
 
-**리뷰 등록 · 대시보드**
+**수강 정보 · 리뷰 등록 · 대시보드**
 
+- 수강 정보 · 수강생 목록 관련 조회 및 수정
 - 수강생 리뷰 등록 (텍스트 리뷰와 포토 후기)
 - 사이트 관리자 대시보드 일부를 팀원과 함께 작업
 
-코드: `review/ReviewController.java`, `review/ReviewService.java`
+코드: `joinClass/`, `review/ReviewController.java`, `review/ReviewService.java`
 
 ## 코드 및 기록
 
