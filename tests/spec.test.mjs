@@ -9,10 +9,10 @@ test("명세서 머리: 파일 번호, 결재란, 꼬리 문서 번호", async (
   assert.match(html, /GSY-2026-001-F0\d/);
 });
 
-// 현재 ca2sa.md 는 team·troubleshooting 이 없다. Task 9에서 채우면 대상 파일을 그 상태인 다른 프로젝트로 바꾼다.
-test("트러블슈팅이 없으면 양식 표를 그리지 않고, team 없으면 팀 칸이 없다", async () => {
+// 공개된 프로젝트는 모두 트러블슈팅이 있다. ca2sa.md 는 team 이 없어 팀 칸이 빠지는지도 함께 본다.
+test("트러블슈팅은 양식 표로 그리고, team 없으면 팀 칸이 없다", async () => {
   const html = await readDist("projects/ca2sa/index.html");
-  assert.doesNotMatch(html, /트러블슈팅 ·/);
+  assert.match(html, /트러블슈팅 ·/);
   assert.doesNotMatch(html, />팀</);
   assert.doesNotMatch(html, />\s*undefined\s*</);
 });

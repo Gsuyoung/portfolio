@@ -6,7 +6,7 @@ role: "백엔드 단독 개발 (프론트엔드 1명과 협업)"
 team: "재직 중인 회사 프로젝트 · 고객사 비공개"
 stack: ["Java", "Spring Boot", "Spring Security", "JPA", "Redis", "jsoup", "Swagger"]
 highlight: "ERD · API 명세부터 7개 도메인 API, 운영 환경 설정까지 백엔드 단독 담당"
-order: 0
+order: 1
 draft: true
 troubleshooting:
   - title: "로그아웃한 리프레시 토큰이 다시 유효해지는 문제"

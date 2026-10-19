@@ -7,7 +7,7 @@ team: "백엔드 5명 · 프론트엔드 3명(2차) → 2명(3차)"
 stack: ["Java 17", "Spring Boot 3.4", "Spring Security", "JPA", "MyBatis", "MariaDB", "Apache POI"]
 highlight: "엑셀 성적 일괄 등록 · 수정을 제안해 구현, 강좌 · 시험 · 성적 관리와 출석부 API 개발"
 repo: "https://github.com/Gsuyoung/studyBridge"
-order: 2
+order: 4
 draft: false
 troubleshooting:
   - title: "처음 다뤄 본 엑셀 일괄 처리 — 보여 줄 컬럼과 반영할 컬럼"
