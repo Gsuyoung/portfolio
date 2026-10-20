@@ -7,7 +7,7 @@ team: "재직 중인 회사 프로젝트 · 고객사 비공개"
 stack: ["Java", "Spring Boot", "Spring Security", "JPA", "Redis", "jsoup", "Swagger"]
 highlight: "ERD · API 명세부터 7개 도메인 API, 운영 환경 설정까지 백엔드 단독 담당"
 order: 1
-draft: true
+draft: false
 troubleshooting:
   - title: "로그아웃한 리프레시 토큰이 다시 유효해지는 문제"
     problem: "로그인 · 로그아웃을 테스트하던 중, 로그아웃한 뒤 같은 관리자가 다시 로그인하면 이전 쿠키가 다시 유효해질 수 있는 동작을 발견했습니다."
