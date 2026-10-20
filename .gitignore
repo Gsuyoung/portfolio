@@ -22,3 +22,6 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# 개인 작성 메모 (로컬에만 보관)
+docs/

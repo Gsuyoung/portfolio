@@ -44,7 +44,6 @@ src/
 ├─ pages/projects/[slug].astro  프로젝트 상세 (기술 명세서)
 └─ pages/404.astro          찾을 수 없는 문서
 
-docs/project-notes/         사이트에 나가지 않는 프로젝트 확인 메모
 tests/                      npm test (node:test)
 ```
 
