@@ -6,7 +6,7 @@ role: "백엔드 · 메뉴 CUD / 메뉴 옵션 등록·수정 담당"
 stack: [Java 17, Spring Boot 3.3.6, MyBatis, MariaDB, springdoc OpenAPI, Gradle]
 highlight: "메뉴 등록·수정·삭제와 이미지 파일 관리, 메뉴 옵션 중복 검증"
 repo: https://github.com/2024-GREEN-1st-PROJECT/CA2SA
-order: 5
+order: 6
 draft: false
 troubleshooting:
   - title: "처음 겪은 프론트엔드 연동 — 파라미터와 소통 방식"

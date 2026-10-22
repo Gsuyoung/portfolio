@@ -6,7 +6,7 @@ role: "구매 · 배송 도메인 담당 · 교환 · 환불 테이블 설계 ·
 team: "index팀 · 5명 (고객 · 구매 · 재고 · CS · 정산 분담)"
 stack: ["MySQL", "SQL", "FULLTEXT INDEX", "Trigger · Procedure", "EXPLAIN ANALYZE", "ERDCloud"]
 highlight: "날짜·지역별 배송 상태 조회 710ms → 231ms (FULLTEXT · 커버링 인덱스)"
-order: 3
+order: 4
 draft: false
 troubleshooting:
   - title: "구매 · 출고 트리거로 인한 락 병목"

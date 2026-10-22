@@ -6,7 +6,7 @@ role: "백엔드 · 엑셀 거래 대량 업로드 · 외부 API Key 인증 · E
 team: "백엔드 5명 · 입사 후 첫 프로젝트 · 고객사 비공개"
 stack: ["Java", "Spring Boot 3.5", "Spring Security", "JPA", "Redis", "JWT", "Apache POI", "Swagger"]
 highlight: "엑셀 거래 대량 업로드 · 외부 API Key 인증을 개발하고, 최종 배포와 유지보수까지 담당"
-order: 2
+order: 3
 draft: false
 troubleshooting:
   - title: "대용량 PG사 엑셀이 업로드되지 않던 문제"
