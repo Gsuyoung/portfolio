@@ -79,6 +79,9 @@
   .spec-prose > :not(h2) {
     margin-left: 64px;
   }
+  .spec-clause > p + p {
+    margin-top: 10px;
+  }
   .spec-prose {
     color: #35332f;
     line-height: 1.8;
