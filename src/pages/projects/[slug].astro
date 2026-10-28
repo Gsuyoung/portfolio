@@ -34,7 +34,7 @@ const d = project.data;
           d.lesson && (
             <section class="spec-clause">
               <h2>배운 점</h2>
-              <p>{d.lesson}</p>
+              {d.lesson.split(/\n\s*\n/).map((paragraph) => <p>{paragraph}</p>)}
             </section>
           )
         }
