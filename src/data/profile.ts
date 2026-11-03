@@ -43,6 +43,7 @@ export const experience: { period: string; title: string; items: string[] }[] = 
     period: "2026.05 – 현재",
     title: "코코에이치 · 백엔드 개발",
     items: [
+      "입사 교육 과제로 패션 쇼핑몰 백엔드 단독 개발 (장바구니 · 카테고리 · 회원 · 인증)",
       "Spring Boot · JPA 기반 REST API 개발",
       "관리자 · 외부 이용자 인증 · 권한 처리 (Spring Security, Redis 세션)",
       "AI 도구를 활용해 외부 실행 파일과 연동하는 결제 모듈 개발",
