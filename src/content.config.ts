@@ -16,6 +16,8 @@ const projects = defineCollection({
     highlight: z.string().optional(),
     repo: z.string().url().optional(),
     demo: z.string().url().optional(),
+    // 노션 공개 페이지(상세 개발 기록). notion.site 주소를 씁니다.
+    notion: z.string().url().optional(),
     // 트러블슈팅은 문제 → 원인 → 해결 → 결과 표로 렌더링됩니다.
     troubleshooting: z
       .array(

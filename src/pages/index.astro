@@ -76,7 +76,14 @@ const tabs = [
                       <td>
                         <ul class="duties">
                           {e.items.map((i) => (
-                            <li>{i}</li>
+                            <li>
+                              {typeof i === "string" ? i : (
+                                <>
+                                  {i.text}{" "}
+                                  <a class="duty-link" href={i.href} target="_blank" rel="noopener">Notion 상세 기록 ↗</a>
+                                </>
+                              )}
+                            </li>
                           ))}
                         </ul>
                       </td>
@@ -232,6 +239,14 @@ const tabs = [
   .duties {
     display: grid;
     gap: 3px;
+  }
+  .duty-link {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    white-space: nowrap;
   }
   .duties li::before {
     content: "– ";

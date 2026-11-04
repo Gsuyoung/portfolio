@@ -7,6 +7,7 @@ team: "백엔드 5명 · 프론트엔드 3명(2차) → 2명(3차)"
 stack: ["Java 17", "Spring Boot 3.4", "Spring Security", "JPA", "MyBatis", "MariaDB", "Apache POI"]
 highlight: "엑셀 성적 일괄 등록 · 수정을 제안해 구현, 강좌 · 시험 · 성적 관리와 출석부 API 개발"
 repo: "https://github.com/Gsuyoung/studyBridge"
+notion: "https://wistful-dawn-f4f.notion.site/1c3bc7efc27480aa9ecad95045e937b4#e55ad102118042fbb1c9742ce379f0bc"
 order: 6
 draft: false
 troubleshooting:
@@ -100,7 +101,6 @@ Spring Boot
 
 ## 코드 및 기록
 
-- [원본 GitHub 저장소](https://github.com/Gsuyoung/studyBridge)
 - [출석 관리 코드](https://github.com/Gsuyoung/studyBridge/tree/master/src/main/java/com/green/acamatch/attendance)
 - [성적 관리 코드](https://github.com/Gsuyoung/studyBridge/tree/master/src/main/java/com/green/acamatch/grade)
 - [엑셀 관련 코드](https://github.com/Gsuyoung/studyBridge/tree/master/src/main/java/com/green/acamatch/excel)

@@ -6,6 +6,7 @@ role: "백엔드 유지보수 · 기능 추가 · DB 구조 변경 · 프론트�
 team: "재직 중인 회사의 고객사 프로젝트 · 기존 개발자에게서 넘겨받음"
 stack: ["Java 21", "Spring Boot", "JPA", "MariaDB", "Redis", "Spring Security", "jsoup", "Apache Tika", "Swagger"]
 highlight: "넘겨받은 운영 서비스에서 JPA 순위 오류 · 날짜 표시 오류를 찾아 고치고, 본문 이미지 삽입 · 이수증 제출 서류 기능을 추가"
+notion: "https://wistful-dawn-f4f.notion.site/b30bc7efc27483fa8e6301661d886bab"
 order: 1
 draft: false
 troubleshooting:

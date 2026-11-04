@@ -38,12 +38,17 @@ export const skills: { group: string; items: string[] }[] = [
 ];
 
 // 경력. 최신순.
-export const experience: { period: string; title: string; items: string[] }[] = [
+// 항목에 상세 기록이 있으면 { text, href }로 적으면 링크가 붙습니다.
+export type Duty = string | { text: string; href: string };
+export const experience: { period: string; title: string; items: Duty[] }[] = [
   {
     period: "2026.05 – 현재",
     title: "코코에이치 · 백엔드 개발",
     items: [
-      "입사 교육 과제로 패션 쇼핑몰 백엔드 단독 개발 (장바구니 · 카테고리 · 회원 · 인증)",
+      {
+        text: "입사 교육 과제로 패션 쇼핑몰 백엔드 단독 개발 (장바구니 · 카테고리 · 회원 · 인증)",
+        href: "https://wistful-dawn-f4f.notion.site/eccbc7efc27483ec8da9817afa30608d",
+      },
       "Spring Boot · JPA 기반 REST API 개발",
       "관리자 · 외부 이용자 인증 · 권한 처리 (Spring Security, Redis 세션)",
       "AI 도구를 활용해 외부 실행 파일과 연동하는 결제 모듈 개발",

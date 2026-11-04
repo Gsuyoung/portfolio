@@ -6,6 +6,7 @@ role: "백엔드 · 프로젝트 초기 세팅 · 엑셀 거래 대량 업로드
 team: "백엔드 4명 · 프론트엔드 1명 · 입사 후 첫 프로젝트 · 고객사 비공개"
 stack: ["Java", "Spring Boot 3.5", "Spring Security", "JPA", "Redis", "JWT", "Apache POI", "Swagger"]
 highlight: "엑셀 거래 대량 업로드 · 외부 API Key 인증을 개발하고, 최종 배포와 유지보수까지 담당"
+notion: "https://wistful-dawn-f4f.notion.site/ea4bc7efc27483d39a5a81299aff4b2b"
 order: 4
 draft: false
 troubleshooting:

@@ -6,6 +6,7 @@ role: "백엔드 · 메뉴 CUD / 메뉴 옵션 등록·수정 담당"
 stack: [Java 17, Spring Boot 3.3.6, MyBatis, MariaDB, springdoc OpenAPI, Gradle]
 highlight: "메뉴 등록·수정·삭제와 이미지 파일 관리, 메뉴 옵션 중복 검증"
 repo: https://github.com/2024-GREEN-1st-PROJECT/CA2SA
+notion: "https://wistful-dawn-f4f.notion.site/1c3bc7efc27480aa9ecad95045e937b4#1c3bc7efc274816a927fc6a555a15752"
 order: 7
 draft: false
 troubleshooting:
@@ -76,7 +77,3 @@ MariaDB
 - 메뉴 등록 시 이미지가 없는 분기에서는 메뉴명 중복 검사를 거치지 않으므로 검증 로직을 공통화할 여지가 있습니다.
 - 이미지 저장 실패를 로그로만 처리하면 DB 데이터와 실제 파일 상태가 달라질 수 있으므로 실패 정책과 정리 절차를 검토할 필요가 있습니다.
 - 메뉴 이미지 파일 삭제와 DB 변경은 하나의 DB 트랜잭션만으로 원자성을 보장할 수 없으므로 작업 순서를 신중히 설계해야 합니다.
-
-## 원본 소스
-
-[CA2SA GitHub 저장소](https://github.com/2024-GREEN-1st-PROJECT/CA2SA)

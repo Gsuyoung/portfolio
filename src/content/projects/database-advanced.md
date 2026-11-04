@@ -6,6 +6,7 @@ role: "구매 · 배송 도메인 담당 · 교환 · 환불 테이블 설계 ·
 team: "index팀 · 5명 (고객 · 구매 · 재고 · CS · 정산 분담)"
 stack: ["MySQL", "SQL", "FULLTEXT INDEX", "Trigger · Procedure", "EXPLAIN ANALYZE", "ERDCloud"]
 highlight: "날짜·지역별 배송 상태 조회 710ms → 231ms (FULLTEXT · 커버링 인덱스)"
+notion: "https://wistful-dawn-f4f.notion.site/1c3bc7efc27480aa9ecad95045e937b4#fef693d79232404f9e55fb92b442617d"
 order: 5
 draft: false
 troubleshooting:
@@ -30,7 +31,7 @@ lesson: "인덱스와 실행 계획을 직접 비교하며 쿼리 구조가 성�
 - **프로젝트 목표**: 운영 효율화 · 고객 만족도 향상 · 정확한 재고와 정산 관리
 - **팀 분담**: 고객 · 혜택 / **구매 · 배송 (본인)** / 재고 · 입출고 / CS (교환 · 환불 · 회수) / 업체 정산
 
-- [기획 · 회의 · 명세 · 테스트 문서 (Notion)](https://app.notion.com/p/1d8bc7efc27480afb1d9c7b66448c1b7)
+- [기획 · 회의 · 명세 · 테스트 문서 (Notion)](https://wistful-dawn-f4f.notion.site/1d8bc7efc27480afb1d9c7b66448c1b7)
 - [ERDCloud 설계 자료](https://www.erdcloud.com/d/6rtuiQnjhgvBuhL4u)
 
 ## 진행 기록

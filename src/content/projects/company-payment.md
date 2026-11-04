@@ -6,6 +6,7 @@ role: "백엔드 개발 · 프로젝트 생성 · 모듈 구조 · 결제 연동
 team: "재직 중인 회사 프로젝트 · 백엔드 개발 전담 (VAN사 · 도입 업체 협의는 팀장님)"
 stack: ["Java 21", "Spring Boot", "WebSocket", "Jackson", "Swagger"]
 highlight: "외부 결제 프로그램의 연동 방식을 확인해 구조를 다시 잡고, 결과를 모르는 거래를 거절로 단정하지 않도록 처리"
+notion: "https://wistful-dawn-f4f.notion.site/74dbc7efc27482a2a5bd0139b69f7a16"
 order: 3
 draft: false
 troubleshooting:
