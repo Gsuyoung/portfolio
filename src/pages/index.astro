@@ -72,7 +72,7 @@ const tabs = [
                   experience.map((e) => (
                     <tr>
                       <td class="mono">{e.period}</td>
-                      <td><b>{e.title}</b></td>
+                      <td class="org"><b>{e.title}</b></td>
                       <td>
                         <ul class="duties">
                           {e.items.map((i) => (
@@ -230,6 +230,9 @@ const tabs = [
     padding: 12px 12px 12px 0;
     border-bottom: 1px solid var(--color-hair);
     vertical-align: top;
+  }
+  .ledger td.org {
+    white-space: nowrap;
   }
   .ledger td.mono {
     font-family: var(--font-mono);

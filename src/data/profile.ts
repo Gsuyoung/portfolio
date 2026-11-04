@@ -46,7 +46,7 @@ export const experience: { period: string; title: string; items: Duty[] }[] = [
     title: "코코에이치 · 백엔드 개발",
     items: [
       {
-        text: "입사 교육 과제로 패션 쇼핑몰 백엔드 단독 개발 (장바구니 · 카테고리 · 회원 · 인증)",
+        text: "입사 교육 과제로 패션 쇼핑몰 백엔드 단독 개발",
         href: "https://wistful-dawn-f4f.notion.site/eccbc7efc27483ec8da9817afa30608d",
       },
       "Spring Boot · JPA 기반 REST API 개발",
